@@ -6,6 +6,8 @@
 package modelo;
 
 import desmoj.core.dist.ContDistExponential;
+import desmoj.core.dist.ContDistNormal;
+import desmoj.core.dist.DiscreteDistUniform;
 import desmoj.core.simulator.Experiment;
 import desmoj.core.simulator.Model;
 import desmoj.core.simulator.ProcessQueue;
@@ -28,7 +30,17 @@ public class HospitalModel extends Model {
     public ProcessQueue filaPacientes;
 
     //Fluxo negativo-exponencial distribuído de números pseudo-aleatórios do tipo double.
+    //Fluxo de números aleatórios para os horários de chegada
     public ContDistExponential chegadas;
+    
+    //Fluxo de números aleatórios 
+    //Fluxo uniformemente distribuído de números pseudo-aleatórios do tipo long.
+    //Os valores produzidos por esta distribuição são distribuídos uniformemente no intervalo especificado como parâmetros do construtor.
+    public DiscreteDistUniform discreteDistUniform;
+    
+    // Fluxo de números aleatórios para a duração do serviço (Tempo necessário)
+    public ContDistNormal contDistNormal;
+
 
     //constantes
     //dados de entrada da simulação
