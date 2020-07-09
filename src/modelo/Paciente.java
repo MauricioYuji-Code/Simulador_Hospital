@@ -20,6 +20,7 @@ import desmoj.core.simulator.*;
 
 public class Paciente extends Entity{
     
+    private int id;
     
      /**
      * Pacientes constructor.
@@ -28,8 +29,9 @@ public class Paciente extends Entity{
      * @param showInTrace Sinalizador para mostrar este evento externo em mensagens de rastreamento
      */
 
-    public Paciente(Model model, String entityName, boolean showInTrace) {
+    public Paciente(Model model, String entityName, int id, boolean showInTrace) {
         super(model, entityName, showInTrace);
+        this.id = id;
     }
     
 }

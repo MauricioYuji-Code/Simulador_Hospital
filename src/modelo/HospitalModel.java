@@ -39,6 +39,9 @@ public class HospitalModel extends Model {
     public DiscreteDistUniform discreteDistUniform;
     
     // Fluxo de números aleatórios para a duração do serviço (Tempo necessário)
+    //Essa classe híbrida é capaz de produzir um fluxo distribuído normalmente "Gaussiano" de números pseudo-aleatórios do tipo double
+    //Também conhecido como "distribuição normal simétrica" ​​para maior clareza
+    //ou uma "distribuição normal assimétrica" ​​na qual são assumidos diferentes valores de variação padrão nos dois lados do modo.
     public ContDistNormal contDistNormal;
 
 

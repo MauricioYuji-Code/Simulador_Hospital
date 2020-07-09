@@ -21,6 +21,8 @@ import desmoj.core.simulator.*;
  */
 
 public class PacienteEnty extends SimProcess{
+    
+    private int id; //identificador do paciente
 
      /**
      * Constructs 
@@ -28,8 +30,9 @@ public class PacienteEnty extends SimProcess{
      * @param entityName Nome da entidade
      * @param showInTrace Sinalizador para mostrar este evento externo em mensagens de rastreamento
      */
-    public PacienteEnty(Model model, String entityName, boolean showInTrace) {
+    public PacienteEnty(Model model, String entityName, int id, boolean showInTrace) {
         super(model, entityName, showInTrace);
+        this.id = id;
     }
 
     
