@@ -45,6 +45,8 @@ public class PacienteEnty extends SimProcess{
     
     @Override
     public void lifeCycle(){
+        
+       //Todo ciclo de vida da entidade
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
