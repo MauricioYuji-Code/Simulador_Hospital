@@ -13,6 +13,9 @@ import desmoj.core.simulator.*;
  */
 
 public class Pacientes extends ExternalEvent{
+    
+    
+    private Integer numeroEventos;
    
      /**
      * Pacientes constructor.
@@ -20,7 +23,6 @@ public class Pacientes extends ExternalEvent{
      * @param externalEventName Nome do evento externo
      * @param showInTrace Sinalizador para mostrar este evento externo em mensagens de rastreamento
      */
-
     public Pacientes(Model model, String externalEventName , boolean showInTrace) {
         super(model, externalEventName, showInTrace);
     }
@@ -31,10 +33,15 @@ public class Pacientes extends ExternalEvent{
      *Entidade especial (diferentemente do método eventRoutine (Entity who) da classe Event). 
      *Substitua este método para implementar o comportamento deste evento externo.
      *Realimentação do modelo
+     * Controle de eventos da simulação.
      **/
     @Override
     public void eventRoutine(){
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Instanciar o modelo utilizado
+        //instanciar a entidade
+        //ativar o tempo de span
+        
     }
     
 }
