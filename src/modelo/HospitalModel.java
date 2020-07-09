@@ -106,6 +106,12 @@ public class HospitalModel extends Model {
     public void init() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+    
+    /****Getter's and  Setter's****/
+    
+    
 
     /**
      * run the model *
