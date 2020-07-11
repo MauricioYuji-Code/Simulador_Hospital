@@ -131,9 +131,15 @@ public class HospitalModel extends Model {
         return contDistNormal.sample();
     }
     //Retorna um intervalo de tempo para o próximo tempo entre chegadas de um paciente
+    //Retorna uma amostra do fluxo aleatório usado para determinar
       protected double getPacienteArrivalTime() {
         return contDistExponential.sample();
     }
+      
+    //Intervalo de tempo de um serviço 
+     protected double getServidorServiceTime(){
+     return contDistUniform.sample();
+   }
     
     
 
