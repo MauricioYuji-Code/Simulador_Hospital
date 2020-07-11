@@ -111,6 +111,15 @@ public class HospitalModel extends Model {
     
     /****Getter's and  Setter's****/
     
+    //Retorna um intervalo de tempo para o tempo de serviço 
+     protected double getServiceTime() {
+        return contDistNormal.sample();
+    }
+    //Retorna um intervalo de tempo para o próximo tempo entre chegadas de um paciente
+      protected double getPacienteArrivalTime() {
+        return chegadas.sample();
+    }
+    
     
 
     /**
