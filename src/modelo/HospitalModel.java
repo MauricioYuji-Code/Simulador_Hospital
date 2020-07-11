@@ -119,7 +119,55 @@ public class HospitalModel extends Model {
      */
     @Override
     public void init() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+         // inicializa o serviceTimeStream
+   // Parâmetros:
+   // this = pertence a este modelo
+   // "contDistUniform" = o nome do fluxo
+   // 3.0 = tempo mínimo em minutos de atendimento
+   // 7.0 = tempo máximo em minutos de atendimento
+   // true = mostra no relatório?
+   // false = mostra no rastreamento?
+   contDistUniform = new ContDistUniform (this, "ServiceTimeStream",
+                                          3.0, 7.0, true, false);
+   
+   // ... init () continua
+
+   // inicializa o truckArrivalTimeStream
+   // Parâmetros:
+   // this = pertence a este modelo
+   // "contDistExponential" = o nome do fluxo
+   // 3.0 = tempo médio em minutos entre a chegada de pacientes
+   // true = mostra no relatório?
+   // false = mostra no rastreamento?
+   contDistExponential = new ContDistExponential (this, "TruckArrivalTimeStream",
+                                                   3.0, true, false);
+
+   // necessário porque o horário de chegada não pode ser negativo, mas
+   // uma amostra de uma distribuição exponencial pode ...
+   contDistExponential.setNonNegative (true);
+   
+   // inicializa o truckQueue
+   // Parâmetros:
+   // this = pertence a este modelo
+   // "Fila de pacienetes" = o nome da fila
+   // true = mostra no relatório?
+   // true = mostra no rastreamento?
+   filaPacientes = new ProcessQueue <Paciente> (this, "Fila de pacientes", true, true);
+
+   /*Exemplo "Pode ser utilizado para as entidades internas/servidores do modelo"*/
+   // inicializa o idleVCQueue
+   // Parâmetros:
+   // this = pertence a este modelo
+   // "fila ociosa de VC" = o nome da fila
+   // true = mostra no relatório?
+   // true = mostra no rastreamento?
+   //Objeto:
+   //idleVCQueue = new ProcessQueue <VanCarrier> (esta, "fila de espera do VC inativa", verdadeira, verdadeira);
+   
+   
+   
+        
     }
     
     
