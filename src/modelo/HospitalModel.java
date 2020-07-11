@@ -7,6 +7,7 @@ package modelo;
 
 import desmoj.core.dist.ContDistExponential;
 import desmoj.core.dist.ContDistNormal;
+import desmoj.core.dist.ContDistUniform;
 import desmoj.core.dist.DiscreteDistUniform;
 import desmoj.core.simulator.Experiment;
 import desmoj.core.simulator.Model;
@@ -27,11 +28,25 @@ import java.util.Scanner;
 public class HospitalModel extends Model {
 
     //Enfileirar SimProcess (Entidades) - Ordem padrão ->FIFO
+    //Ex: Toda vez que um peciente chega, ele é inserido nessa fila 
+    //e será removido por um servidor.
     public ProcessQueue filaPacientes;
+    
+    // Pode ser utilizado para as entidades internas/servidores do modelo
+    ProcessQueue <Paciente> idleVCQueue;
 
-    //Fluxo negativo-exponencial distribuído de números pseudo-aleatórios do tipo double.
     //Fluxo de números aleatórios para os horários de chegada
-    public ContDistExponential chegadas;
+    //Fluxo de números aleatórios para modelar o intervalo de tempo entre a chegada
+    //Fluxo de número aleatório usado para desenhar uma hora de chegada para o próximo paciente.
+    //Ex:Supomos que um paciente chegue a cada três minutos, 
+    //o valor médio dessa distribuição ContDistExponential será 3,0.
+    public ContDistExponential contDistExponential;
+    
+    //Fluxo de números aleatórios usado para desenhar um tempo de serviço para um paciente.
+    //Provê o tempo de um serviço.
+    //Exemplo: atendimento leva-se de um 3 a 7 min
+    public ContDistUniform contDistUniform;
+ 
     
     //Fluxo de números aleatórios 
     //Fluxo uniformemente distribuído de números pseudo-aleatórios do tipo long.
@@ -67,19 +82,19 @@ public class HospitalModel extends Model {
     }
 
     /**
-     * retorna uma descrição do modelo a ser usado no relatório.
+     * Retorna uma descrição do modelo a ser usado no relatório.
      *
      * @return String
      */
     @Override
     public String description() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return "Este modelo representa um hospital blablabla....";
     }
 
     /**
      * ativa componentes dinâmicos do modelo (processos de simulação). Este
      * método é usado para colocar todos os eventos ou processos na lista
-     * interna de eventos do simulador, necessários para iniciar a simulação.
+     * de eventos internos do simulador necessários para iniciar a simulação.
      *
      */
     @Override
@@ -117,7 +132,7 @@ public class HospitalModel extends Model {
     }
     //Retorna um intervalo de tempo para o próximo tempo entre chegadas de um paciente
       protected double getPacienteArrivalTime() {
-        return chegadas.sample();
+        return contDistExponential.sample();
     }
     
     
