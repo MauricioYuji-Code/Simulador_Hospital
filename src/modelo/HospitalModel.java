@@ -13,7 +13,9 @@ import desmoj.core.simulator.Experiment;
 import desmoj.core.simulator.Model;
 import desmoj.core.simulator.ProcessQueue;
 import desmoj.core.simulator.TimeInstant;
+import desmoj.core.simulator.TimeSpan;
 import java.util.Scanner;
+import sun.nio.cs.Surrogate;
 
 /**
  *
@@ -95,14 +97,20 @@ public class HospitalModel extends Model {
      * ativa componentes dinâmicos do modelo (processos de simulação). Este
      * método é usado para colocar todos os eventos ou processos na lista
      * de eventos internos do simulador necessários para iniciar a simulação.
+     * 
+     * Nesse caso, o gerador do paciente e as entidades internas/servidores devem ser criado e ativado.
      *
      */
     @Override
     public void doInitialSchedules() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        /*
-        * Instancia-se o fator externo para esta função.
-         */
+
+        
+     // cria e ativa o processo de gerador de paciente 
+     Pacientes generator = new Pacientes(this,"TruckArrival",false);
+     //generator.activate();
+     generator.schedule(new TimeSpan(0.0));
+     
+       
 
  /*
      * TimeSpan -> Representa períodos de tempo de simulação.
@@ -133,7 +141,7 @@ public class HospitalModel extends Model {
    
    // ... init () continua
 
-   // inicializa o truckArrivalTimeStream
+   // inicializa o ArrivalTimeStream
    // Parâmetros:
    // this = pertence a este modelo
    // "contDistExponential" = o nome do fluxo
@@ -147,7 +155,7 @@ public class HospitalModel extends Model {
    // uma amostra de uma distribuição exponencial pode ...
    contDistExponential.setNonNegative (true);
    
-   // inicializa o truckQueue
+   // inicializa o pacienteQueue
    // Parâmetros:
    // this = pertence a este modelo
    // "Fila de pacienetes" = o nome da fila
