@@ -102,11 +102,9 @@ public class HospitalModel extends Model {
      *
      */
     @Override
-    public void doInitialSchedules() {
-
-        
+    public void doInitialSchedules() {  
      // cria e ativa o processo de gerador de paciente 
-     Pacientes generator = new Pacientes(this,"TruckArrival",false);
+     Pacientes generator = new Pacientes(this,"ChegadaPaciente",false);
      //generator.activate();
      generator.schedule(new TimeSpan(0.0));
      
@@ -201,6 +199,15 @@ public class HospitalModel extends Model {
 
     /**
      * run the model *
+     * 
+     *  instanciar um experimento
+     *  instanciar o modelo
+     *  conectar o modelo ao experimento
+     *  determinar o comprimento da execução da simulação ou definir um critério final para a execução da simulação
+     *  defina o horário de início e término para o arquivo de rastreio
+     *  iniciar o planejador
+     *  iniciar relatórios
+     *  limpar após o término da simulação
      */
     public static void main(String[] args) {
 
@@ -208,20 +215,28 @@ public class HospitalModel extends Model {
         Scanner sc = new Scanner(System.in);
         System.out.println("Tempo de simulação (em minutos):");
         tempoSimulação = sc.nextDouble();
-
+        
+        // null como primeiro parâmetro, porque é o modelo principal e não possui modelo mestre
         HospitalModel model = new HospitalModel(null, "Modelo Hospital", true, true);
+        
         // criando o modelo e o experimento
+        // ATENÇÃO, já que o nome do experimento é usado nos nomes dos
+        // arquivos de saída, você deve especificar uma string que seja compatível com o
+        // restrições de nome de arquivo do sistema operacional do seu computador.
         Experiment exp = new Experiment("Experimento Hospital");
         //Experiment exp = new Experiment("ExampleExperiment", TimeUnit.SECONDS, TimeUnit.MINUTES, null);
 
-        // conectando...
+        // conecta ambos
         model.connectToExperiment(exp);
 
         // set parametros do experimento
-        exp.setShowProgressBar(true);  // display de progressão da simulação
-        exp.stop(new TimeInstant(1500));   // set fim da simulação 1500 minutos
-        exp.tracePeriod(new TimeInstant(0), new TimeInstant(100));  // set período de tempo da simulação em tempo real
-        exp.debugPeriod(new TimeInstant(0), new TimeInstant(50));   // debug output
+        exp.setShowProgressBar(true);  // display de progressão da simulação/exibe uma barra de progresso
+        exp.stop(new TimeInstant(1500));   // define o fim da simulação em 1500 minutos
+        exp.tracePeriod(new TimeInstant(0), new TimeInstant(100));  // define o período do rastreio
+        exp.debugPeriod(new TimeInstant(0), new TimeInstant(50));   // e saída de depuração
+      // ATENÇÃO!
+      // Não use períodos muito longos. Caso contrário, uma enorme página HTML será
+      // ser criado, travando o Netscape :-)
 
         // starta a experiência com o horário de início 0.0
         exp.start();
