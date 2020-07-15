@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import co.paralleluniverse.fibers.SuspendExecution;
 import desmoj.core.simulator.*;
 import java.util.concurrent.TimeUnit;
 
@@ -28,10 +29,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class Paciente extends SimProcess {
 
+    /**
+     * uma referência ao modelo em que este processo faz parte atalho útil para
+     * acessar os componentes estáticos do modelo
+     */
+    private HospitalModel myModel;
     private int id; //identificador do paciente
 
     /**
      * Constructs
+     *
+     * Usado para criar um novo paciente para ser atendido.
      *
      * @param model o modelo ao qual esta entidade pertenci
      * @param entityName Nome da entidade
@@ -41,6 +49,7 @@ public class Paciente extends SimProcess {
     public Paciente(Model model, String entityName, int id, boolean showInTrace) {
         super(model, entityName, showInTrace);
         this.id = id;
+        this.myModel = (HospitalModel) model;
     }
 
     /**
@@ -51,12 +60,35 @@ public class Paciente extends SimProcess {
      *
      * descreve o ciclo de vida desse processo: gere continuamente novos
      * pacientes.
+     *
+     * Chegada do cliente Entra na fila continua...
+     *
      */
     @Override
-    public void lifeCycle() {
+    public void lifeCycle() throws SuspendExecution {
+        /**
+         * *Descrever o ciclo de vida do paciente**
+         */
+
+        // entra na fila
+        // Ao inserir o Paciente na fila, fazemos a fila mantendo o controle dos dados estatísticos automaticamente. 
+        myModel.filaPacientes.insert(this);
+        // usada para inserir texto adicional na saída do arquivo de rastreamento. Essa é uma maneira muito útil de tornar o arquivo de rastreamento mais compreensível para o leitor. 
+        sendTraceNote("PacienteQueuelength:" + myModel.filaPacientes.length());
+
+        //Adicionaro condição para ver se o proximo serviço está disponivel
+        //Testarei com a recepcção
+        /*
+        ...Efetuando condição de disponibilidade do serviço!
+         */
+        // espera pelo serviço 
+        passivate();
+
+        // Ok, estou novamente online, o que significa que fui atendido pela recepção 
+        // Posso ir para o proximo servidor do sistema 
+        // uma mensagem para o arquivo de rastreamento
+        sendTraceNote("O paciente foi atendido pela recepção");
 
     }
-
- 
 
 }
