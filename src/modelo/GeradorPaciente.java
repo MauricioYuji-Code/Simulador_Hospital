@@ -57,7 +57,16 @@ public class GeradorPaciente extends SimProcess {
 
             // agora deixe o paciente recém-criado passar pelo hospital
             // o que significa que vamos ativá-lo após esse gerador de paciente
+            // Isso garante que o novo paciente seja ativado no ponto atual no tempo de simulação
             paciente.activateAfter(this);
+            
+            
+            //outra alternativa...
+            //Isso também agenda uma nota de ativação para o processo do paciente no ponto atual no tempo da simulação. A única diferença é que o processo do paciente pode não ser ativado 
+            //diretamente depois que o gerador do paciente passa o controle para o planejador.
+         
+            paciente.activate(new TimeSpan(0));
+            
 
             // aguarde até a próxima chegada do caminhão
             hold(new TimeSpan(model.getPacienteArrivalTime(), TimeUnit.MINUTES));

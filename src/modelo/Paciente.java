@@ -6,6 +6,7 @@
 package modelo;
 
 import desmoj.core.simulator.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -55,5 +56,7 @@ public class Paciente extends SimProcess {
     public void lifeCycle() {
 
     }
+
+ 
 
 }
