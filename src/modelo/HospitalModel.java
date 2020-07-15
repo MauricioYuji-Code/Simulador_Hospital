@@ -103,12 +103,18 @@ public class HospitalModel extends Model {
      */
     @Override
     public void doInitialSchedules() {  
+        
+        /*AMBOS TEORICAMENTE FAZEM A MESMA COISA*/   
      // cria e ativa o processo de gerador de paciente 
      Pacientes generator = new Pacientes(this,"ChegadaPaciente",false);
      //generator.activate();
      generator.schedule(new TimeSpan(0.0));
-     
-       
+     // cria e ativa o processo de gerador de paciente
+     //Talvez use
+     GeradorPaciente paciente = new GeradorPaciente(this,"ChegadaPaciente",false);
+     paciente.activate();
+        /*AMBOS TEORICAMENTE FAZEM A MESMA COISA*/   
+          
 
  /*
      * TimeSpan -> Representa períodos de tempo de simulação.
