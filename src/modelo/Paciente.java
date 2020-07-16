@@ -58,8 +58,7 @@ public class Paciente extends SimProcess {
      * executado uma ou várias vezes, dependendo do status de repetição do
      * SimProcess.
      *
-     * descreve o ciclo de vida desse processo: gere continuamente novos
-     * pacientes.
+     * descreve o ciclo de vida desse processo:
      *
      * Chegada do cliente Entra na fila continua...
      *
