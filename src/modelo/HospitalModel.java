@@ -33,11 +33,11 @@ public class HospitalModel extends Model {
     //Ex: Toda vez que um peciente chega, ele é inserido nessa fila 
     //e será removido por um servidor.
     public ProcessQueue filaPacientes;
-    
+
     // Pode ser utilizado para as entidades internas/servidores do modelo
     //Se não houver áciente aguardando , a recepcap retornará aqui
     //e aguarde o próximo paciente chegar.
-    ProcessQueue <Recepcao> osciosidadeRecepcao;
+    ProcessQueue<Recepcao> osciosidadeRecepcao;
 
     //Fluxo de números aleatórios para os horários de chegada
     //Fluxo de números aleatórios para modelar o intervalo de tempo entre a chegada
@@ -45,28 +45,26 @@ public class HospitalModel extends Model {
     //Ex:Supomos que um paciente chegue a cada três minutos, 
     //o valor médio dessa distribuição ContDistExponential será 3,0.
     public ContDistExponential contDistExponential;
-    
+
     //Fluxo de números aleatórios usado para desenhar um tempo de serviço para um paciente.
     //Provê o tempo de um serviço.
     //Exemplo: atendimento leva-se de um 3 a 7 min
     public ContDistUniform contDistUniform;
- 
-    
+
     //Fluxo de números aleatórios 
     //Fluxo uniformemente distribuído de números pseudo-aleatórios do tipo long.
     //Os valores produzidos por esta distribuição são distribuídos uniformemente no intervalo especificado como parâmetros do construtor.
     public DiscreteDistUniform discreteDistUniform;
-    
+
     // Fluxo de números aleatórios para a duração do serviço (Tempo necessário)
     //Essa classe híbrida é capaz de produzir um fluxo distribuído normalmente "Gaussiano" de números pseudo-aleatórios do tipo double
     //Também conhecido como "distribuição normal simétrica" ​​para maior clareza
     //ou uma "distribuição normal assimétrica" ​​na qual são assumidos diferentes valores de variação padrão nos dois lados do modo.
     public ContDistNormal contDistNormal;
 
-
     //constantes
     protected static int NUM_RECEPCIONISTA = 1;
-    
+
     //dados de entrada da simulação
     static double tempoSimulação;
 
@@ -94,37 +92,50 @@ public class HospitalModel extends Model {
      */
     @Override
     public String description() {
-       return "Este modelo representa um hospital blablabla....";
+        return "Este modelo representa um hospital blablabla....";
     }
 
     /**
      * ativa componentes dinâmicos do modelo (processos de simulação). Este
-     * método é usado para colocar todos os eventos ou processos na lista
-     * de eventos internos do simulador necessários para iniciar a simulação.
-     * 
-     * Nesse caso, o gerador do paciente e as entidades internas/servidores devem ser criado e ativado.
+     * método é usado para colocar todos os eventos ou processos na lista de
+     * eventos internos do simulador necessários para iniciar a simulação.
+     *
+     * Nesse caso, o gerador do paciente e as entidades internas/servidores
+     * devem ser criado e ativado.
      *
      */
     @Override
-    public void doInitialSchedules() {  
-        
-        /*AMBOS TEORICAMENTE FAZEM A MESMA COISA*/   
+    public void doInitialSchedules() {
+        //**Utilizado no video
+        /*AMBOS TEORICAMENTE FAZEM A MESMA COISA  
      // cria e ativa o processo de gerador de paciente 
      Pacientes generator = new Pacientes(this,"ChegadaPaciente",false);
      //generator.activate();
      generator.schedule(new TimeSpan(0.0));
+        //**Utilizado no video
      // cria e ativa o processo de gerador de paciente
      //Talvez use
      GeradorPaciente paciente = new GeradorPaciente(this,"ChegadaPaciente",false);
      paciente.activate();
-        /*AMBOS TEORICAMENTE FAZEM A MESMA COISA*/   
-          
+        AMBOS TEORICAMENTE FAZEM A MESMA COISA*/
 
  /*
      * TimeSpan -> Representa períodos de tempo de simulação.
      * Cada intervalo de tempo de simulação é representado por um objeto individual desta classe e oferece seus próprios métodos para operações aritméticas e comparação.
      * Garante que apenas intervalos de tempo válidos sejam gerados.
          */
+        // cria e ativa 
+        for (int i = 0; i < NUM_RECEPCIONISTA; i++) {
+            Recepcao recepcionista = new Recepcao(this, "Recepcionista", true);
+            recepcionista.activate();
+            // Use TimeSpan para ativar um processo após um período de tempo relativo ao tempo real da simulação,
+            // ou use TimeInstant para ativar o processo em um ponto absoluto no tempo.
+        }
+
+        // cria e ativa o processo de gerador de pacientes
+        GeradorPaciente geradorPaciente = new GeradorPaciente(this, "ChegadaPaciente", false);
+        geradorPaciente.activate();
+
     }
 
     /**
@@ -135,89 +146,79 @@ public class HospitalModel extends Model {
      */
     @Override
     public void init() {
-        
-         // inicializa o serviceTimeStream
-   // Parâmetros:
-   // this = pertence a este modelo
-   // "contDistUniform" = o nome do fluxo
-   // 3.0 = tempo mínimo em minutos de atendimento
-   // 7.0 = tempo máximo em minutos de atendimento
-   // true = mostra no relatório?
-   // false = mostra no rastreamento?
-   contDistUniform = new ContDistUniform (this, "ServiceTimeStream",
-                                          3.0, 7.0, true, false);
-   
-   // ... init () continua
 
-   // inicializa o ArrivalTimeStream
-   // Parâmetros:
-   // this = pertence a este modelo
-   // "contDistExponential" = o nome do fluxo
-   // 3.0 = tempo médio em minutos entre a chegada de pacientes
-   // true = mostra no relatório?
-   // false = mostra no rastreamento?
-   contDistExponential = new ContDistExponential (this, "TruckArrivalTimeStream",
-                                                   3.0, true, false);
+        // inicializa o serviceTimeStream
+        // Parâmetros:
+        // this = pertence a este modelo
+        // "contDistUniform" = o nome do fluxo
+        // 3.0 = tempo mínimo em minutos de atendimento
+        // 7.0 = tempo máximo em minutos de atendimento
+        // true = mostra no relatório?
+        // false = mostra no rastreamento?
+        contDistUniform = new ContDistUniform(this, "ServiceTimeStream",
+                3.0, 7.0, true, false);
 
-   // necessário porque o horário de chegada não pode ser negativo, mas
-   // uma amostra de uma distribuição exponencial pode ...
-   contDistExponential.setNonNegative (true);
-   
-   // inicializa o pacienteQueue
-   // Parâmetros:
-   // this = pertence a este modelo
-   // "Fila de pacienetes" = o nome da fila
-   // true = mostra no relatório?
-   // true = mostra no rastreamento?
-   filaPacientes = new ProcessQueue <Paciente> (this, "Fila de pacientes", true, true);
+        // ... init () continua
+        // inicializa o ArrivalTimeStream
+        // Parâmetros:
+        // this = pertence a este modelo
+        // "contDistExponential" = o nome do fluxo
+        // 3.0 = tempo médio em minutos entre a chegada de pacientes
+        // true = mostra no relatório?
+        // false = mostra no rastreamento?
+        contDistExponential = new ContDistExponential(this, "ChegadaPacienteTimeStream",
+                3.0, true, false);
 
-   /*Exemplo "Pode ser utilizado para as entidades internas/servidores do modelo"*/
-   // inicializa o idleVCQueue
-   // Parâmetros:
-   // this = pertence a este modelo
-   // "fila ociosa de VC" = o nome da fila
-   // true = mostra no relatório?
-   // true = mostra no rastreamento?
-   //Objeto:
-   //idleVCQueue = new ProcessQueue <VanCarrier> (esta, "fila de espera do VC inativa", verdadeira, verdadeira);
-   
-   
-   
-        
+        // necessário porque o horário de chegada não pode ser negativo, mas
+        // uma amostra de uma distribuição exponencial pode ...
+        contDistExponential.setNonNegative(true);
+
+        // inicializa o pacienteQueue
+        // Parâmetros:
+        // this = pertence a este modelo
+        // "Fila de pacientes" = o nome da fila
+        // true = mostra no relatório?
+        // true = mostra no rastreamento?
+        filaPacientes = new ProcessQueue<Paciente>(this, "Fila de pacientes", true, true);
+
+        /*Exemplo "Pode ser utilizado para as entidades internas/servidores do modelo"*/
+        // inicializa o osciosidadeRecepcao (recepcionista prontos para o serviço)
+        // Parâmetros:
+        // this = pertence a este modelo
+        // "fila ociosa de paciente" = o nome da fila
+        // true = mostra no relatório?
+        // true = mostra no rastreamento?
+        //Objeto:
+        osciosidadeRecepcao = new ProcessQueue <Recepcao> (this, "fila de espera da recepcao inativa", true, true);
     }
-    
-    
-    
-    /****Getter's and  Setter's****/
-    
+
+    /**
+     * **Getter's and  Setter's***
+     */
     //Retorna um intervalo de tempo para o tempo de serviço 
-     protected double getServiceTime() {
+    protected double getServiceTime() {
         return contDistNormal.sample();
     }
+
     //Retorna um intervalo de tempo para o próximo tempo entre chegadas de um paciente
     //Retorna uma amostra do fluxo aleatório usado para determinar
-      protected double getPacienteArrivalTime() {
+    protected double getPacienteArrivalTime() {
         return contDistExponential.sample();
     }
-      
+
     //Intervalo de tempo de um serviço 
-     protected double getServidorServiceTime(){
-     return contDistUniform.sample();
-   }
-    
-    
+    protected double getServidorServiceTime() {
+        return contDistUniform.sample();
+    }
 
     /**
      * run the model *
-     * 
-     *  instanciar um experimento
-     *  instanciar o modelo
-     *  conectar o modelo ao experimento
-     *  determinar o comprimento da execução da simulação ou definir um critério final para a execução da simulação
-     *  defina o horário de início e término para o arquivo de rastreio
-     *  iniciar o planejador
-     *  iniciar relatórios
-     *  limpar após o término da simulação
+     *
+     * instanciar um experimento instanciar o modelo conectar o modelo ao
+     * experimento determinar o comprimento da execução da simulação ou definir
+     * um critério final para a execução da simulação defina o horário de início
+     * e término para o arquivo de rastreio iniciar o planejador iniciar
+     * relatórios limpar após o término da simulação
      */
     public static void main(String[] args) {
 
@@ -225,10 +226,10 @@ public class HospitalModel extends Model {
         Scanner sc = new Scanner(System.in);
         System.out.println("Tempo de simulação (em minutos):");
         tempoSimulação = sc.nextDouble();
-        
+
         // null como primeiro parâmetro, porque é o modelo principal e não possui modelo mestre
         HospitalModel model = new HospitalModel(null, "Modelo Hospital", true, true);
-        
+
         // criando o modelo e o experimento
         // ATENÇÃO, já que o nome do experimento é usado nos nomes dos
         // arquivos de saída, você deve especificar uma string que seja compatível com o
@@ -244,9 +245,9 @@ public class HospitalModel extends Model {
         exp.stop(new TimeInstant(1500));   // define o fim da simulação em 1500 minutos
         exp.tracePeriod(new TimeInstant(0), new TimeInstant(100));  // define o período do rastreio
         exp.debugPeriod(new TimeInstant(0), new TimeInstant(50));   // e saída de depuração
-      // ATENÇÃO!
-      // Não use períodos muito longos. Caso contrário, uma enorme página HTML será
-      // ser criado, travando o Netscape :-)
+        // ATENÇÃO!
+        // Não use períodos muito longos. Caso contrário, uma enorme página HTML será
+        // ser criado, travando o Netscape :-)
 
         // starta a experiência com o horário de início 0.0
         exp.start();
