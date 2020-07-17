@@ -67,7 +67,7 @@ public class Recepcao extends SimProcess{
              // NÃO, não há ninguém aguardando 
              
              // insira-se na fila de recepcao inativa 
-            myModel.filaRecepcao.insert (this); 
+            myModel.osciosidadeRecepcao.insert (this); 
             // e aguarde que as coisas aconteçam 
             passivate (); 
              

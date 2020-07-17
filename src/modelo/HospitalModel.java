@@ -35,7 +35,9 @@ public class HospitalModel extends Model {
     public ProcessQueue filaPacientes;
     
     // Pode ser utilizado para as entidades internas/servidores do modelo
-    ProcessQueue <Recepcao> filaRecepcao;
+    //Se não houver áciente aguardando , a recepcap retornará aqui
+    //e aguarde o próximo paciente chegar.
+    ProcessQueue <Recepcao> osciosidadeRecepcao;
 
     //Fluxo de números aleatórios para os horários de chegada
     //Fluxo de números aleatórios para modelar o intervalo de tempo entre a chegada
@@ -63,6 +65,8 @@ public class HospitalModel extends Model {
 
 
     //constantes
+    protected static int NUM_RECEPCIONISTA = 1;
+    
     //dados de entrada da simulação
     static double tempoSimulação;
 
