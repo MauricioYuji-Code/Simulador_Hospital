@@ -77,9 +77,23 @@ public class Paciente extends SimProcess {
 
         //Adicionaro condição para ver se o proximo serviço está disponivel
         //Testarei com a recepcção
-        /*
-        ...Efetuando condição de disponibilidade do serviço!
-         */
+        
+        //...Efetuando condição de disponibilidade do serviço!
+        //Verificação se a "fila" de servico da recepção está disponivel.
+        if (!myModel.osciosidadeRecepcao.isEmpty()) {
+         // Sim, ele é
+
+         // obtém uma referência ao primeiro funcionario 
+         // da recepcao da fila de recepcionistas ociosos
+         Recepcao recepcionista = myModel.osciosidadeRecepcao.first ();
+         // remova a recepcionista da fila
+         myModel.osciosidadeRecepcao.remove (recepcionista);
+
+         // coloque o funcionario da recepcao na lista de eventos logo depois de mim,
+         // para garantir que eu seja o próximo cliente a receber manutenção
+         recepcionista.activateAfter (this);
+      }
+         
         // espera pelo serviço 
         passivate();
 
