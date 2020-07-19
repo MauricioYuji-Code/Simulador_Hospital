@@ -197,6 +197,9 @@ public class HospitalModel extends Model {
      */
     //Retorna um intervalo de tempo para o tempo de serviço 
     protected double getServiceTime() {
+        if(contDistNormal == null){
+            return 0.0;
+        }
         return contDistNormal.sample();
     }
 
