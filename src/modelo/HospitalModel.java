@@ -14,6 +14,7 @@ import desmoj.core.simulator.Model;
 import desmoj.core.simulator.ProcessQueue;
 import desmoj.core.simulator.TimeInstant;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -242,9 +243,9 @@ public class HospitalModel extends Model {
 
         // set parametros do experimento
         exp.setShowProgressBar(true);  // display de progressão da simulação/exibe uma barra de progresso
-        exp.stop(new TimeInstant(tempoSimulação));   // define o fim da simulação em 1500 minutos
-        exp.tracePeriod(new TimeInstant(0), new TimeInstant(100));  // define o período do rastreio
-        exp.debugPeriod(new TimeInstant(0), new TimeInstant(50));   // e saída de depuração
+        exp.stop(new TimeInstant(tempoSimulação, TimeUnit.MINUTES));   // define o fim da simulação em 1500 minutos
+        exp.tracePeriod(new TimeInstant(0), new TimeInstant(100, TimeUnit.MINUTES));  // define o período do rastreio
+        exp.debugPeriod(new TimeInstant(0), new TimeInstant(50, TimeUnit.MINUTES));   // e saída de depuração
         // ATENÇÃO!
         // Não use períodos muito longos. Caso contrário, uma enorme página HTML será
         // ser criado, travando o Netscape :-)
