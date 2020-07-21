@@ -100,7 +100,7 @@ public class Paciente extends SimProcess {
         // Ok, estou novamente online, o que significa que fui atendido pela recepção 
         // Posso ir para o proximo servidor do sistema 
         // uma mensagem para o arquivo de rastreamento
-        sendTraceNote("O paciente foi atendido pela recepção");
+        sendTraceNote("O paciente foi atendido pela recepcao");
 
     }
 

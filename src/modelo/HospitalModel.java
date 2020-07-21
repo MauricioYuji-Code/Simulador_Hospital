@@ -225,7 +225,7 @@ public class HospitalModel extends Model {
 
         //Informações da simulação
         Scanner sc = new Scanner(System.in);
-        System.out.println("Tempo de simulação (em minutos):");
+        System.out.println("Tempo de simulacão (em minutos):");
         tempoSimulação = sc.nextDouble();
 
         // null como primeiro parâmetro, porque é o modelo principal e não possui modelo mestre
