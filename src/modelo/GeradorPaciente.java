@@ -53,7 +53,7 @@ public class GeradorPaciente extends SimProcess {
             // "Paciente" = nome do objeto
             // id do paciente -> parametro que o mauricio colocou
             // true = mostre o paciente no arquivo de rastreamento
-            Paciente paciente = new Paciente(model, "Paciente", 1, true);
+            Paciente paciente = new Paciente(model, "Paciente", true);
 
             // agora deixe o paciente recém-criado passar pelo hospital
             // o que significa que vamos ativá-lo após esse gerador de paciente
@@ -65,7 +65,7 @@ public class GeradorPaciente extends SimProcess {
             //Isso também agenda uma nota de ativação para o processo do paciente no ponto atual no tempo da simulação. A única diferença é que o processo do paciente pode não ser ativado 
             //diretamente depois que o gerador do paciente passa o controle para o planejador.
          
-            paciente.activate(new TimeSpan(0));
+            //paciente.activate(new TimeSpan(0));
             
 
             // aguarde até a próxima chegada do caminhão

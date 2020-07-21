@@ -13,9 +13,7 @@ import desmoj.core.simulator.Experiment;
 import desmoj.core.simulator.Model;
 import desmoj.core.simulator.ProcessQueue;
 import desmoj.core.simulator.TimeInstant;
-import desmoj.core.simulator.TimeSpan;
 import java.util.Scanner;
-import sun.nio.cs.Surrogate;
 
 /**
  *
@@ -44,11 +42,13 @@ public class HospitalModel extends Model {
     //Fluxo de número aleatório usado para desenhar uma hora de chegada para o próximo paciente.
     //Ex:Supomos que um paciente chegue a cada três minutos, 
     //o valor médio dessa distribuição ContDistExponential será 3,0.
+    //paciente arrival time
     public ContDistExponential contDistExponential;
 
     //Fluxo de números aleatórios usado para desenhar um tempo de serviço para um paciente.
     //Provê o tempo de um serviço.
     //Exemplo: atendimento leva-se de um 3 a 7 min
+    //service time
     public ContDistUniform contDistUniform;
 
     //Fluxo de números aleatórios 
