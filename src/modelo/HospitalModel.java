@@ -30,12 +30,12 @@ public class HospitalModel extends Model {
     //Enfileirar SimProcess (Entidades) - Ordem padrão ->FIFO
     //Ex: Toda vez que um peciente chega, ele é inserido nessa fila 
     //e será removido por um servidor.
-    public ProcessQueue filaPacientes;
+    protected ProcessQueue <Paciente> filaPacientes;
 
     // Pode ser utilizado para as entidades internas/servidores do modelo
     //Se não houver áciente aguardando , a recepcap retornará aqui
     //e aguarde o próximo paciente chegar.
-    ProcessQueue<Recepcao> osciosidadeRecepcao;
+    protected ProcessQueue<Recepcao> osciosidadeRecepcao;
 
     //Fluxo de números aleatórios para os horários de chegada
     //Fluxo de números aleatórios para modelar o intervalo de tempo entre a chegada
@@ -43,24 +43,24 @@ public class HospitalModel extends Model {
     //Ex:Supomos que um paciente chegue a cada três minutos, 
     //o valor médio dessa distribuição ContDistExponential será 3,0.
     //paciente arrival time
-    public ContDistExponential contDistExponential;
+    public ContDistExponential pacienteArrivalTime;
 
     //Fluxo de números aleatórios usado para desenhar um tempo de serviço para um paciente.
     //Provê o tempo de um serviço.
     //Exemplo: atendimento leva-se de um 3 a 7 min
     //service time
-    public ContDistUniform contDistUniform;
+    public ContDistUniform serviceTime;
 
     //Fluxo de números aleatórios 
     //Fluxo uniformemente distribuído de números pseudo-aleatórios do tipo long.
     //Os valores produzidos por esta distribuição são distribuídos uniformemente no intervalo especificado como parâmetros do construtor.
-    public DiscreteDistUniform discreteDistUniform;
+    //public DiscreteDistUniform discreteDistUniform;
 
     // Fluxo de números aleatórios para a duração do serviço (Tempo necessário)
     //Essa classe híbrida é capaz de produzir um fluxo distribuído normalmente "Gaussiano" de números pseudo-aleatórios do tipo double
     //Também conhecido como "distribuição normal simétrica" ​​para maior clareza
     //ou uma "distribuição normal assimétrica" ​​na qual são assumidos diferentes valores de variação padrão nos dois lados do modo.
-    public ContDistNormal contDistNormal;
+    //public ContDistNormal contDistNormal;
 
     //constantes
     protected static int NUM_RECEPCIONISTA = 1;
@@ -150,28 +150,28 @@ public class HospitalModel extends Model {
         // inicializa o serviceTimeStream
         // Parâmetros:
         // this = pertence a este modelo
-        // "contDistUniform" = o nome do fluxo
+        // "serviceTime" = o nome do fluxo
         // 3.0 = tempo mínimo em minutos de atendimento
         // 7.0 = tempo máximo em minutos de atendimento
         // true = mostra no relatório?
         // false = mostra no rastreamento?
-        contDistUniform = new ContDistUniform(this, "ServiceTimeStream",
+        serviceTime = new ContDistUniform(this, "ServiceTimeStream",
                 3.0, 7.0, true, false);
 
         // ... init () continua
         // inicializa o ArrivalTimeStream
         // Parâmetros:
         // this = pertence a este modelo
-        // "contDistExponential" = o nome do fluxo
+        // "pacienteArrivalTime" = o nome do fluxo
         // 3.0 = tempo médio em minutos entre a chegada de pacientes
         // true = mostra no relatório?
         // false = mostra no rastreamento?
-        contDistExponential = new ContDistExponential(this, "ChegadaPacienteTimeStream",
+        pacienteArrivalTime = new ContDistExponential(this, "ChegadaPacienteTimeStream",
                 3.0, true, false);
 
         // necessário porque o horário de chegada não pode ser negativo, mas
         // uma amostra de uma distribuição exponencial pode ...
-        contDistExponential.setNonNegative(true);
+        pacienteArrivalTime.setNonNegative(true);
 
         // inicializa o pacienteQueue
         // Parâmetros:
@@ -189,7 +189,7 @@ public class HospitalModel extends Model {
         // true = mostra no relatório?
         // true = mostra no rastreamento?
         //Objeto:
-        osciosidadeRecepcao = new ProcessQueue <Recepcao> (this, "fila de espera da recepcao inativa", true, true);
+        osciosidadeRecepcao = new ProcessQueue <Recepcao> (this, "Fila de espera da recepcao inativa", true, true);
     }
 
     /**
@@ -197,22 +197,19 @@ public class HospitalModel extends Model {
      */
     //Retorna um intervalo de tempo para o tempo de serviço 
     protected double getServiceTime() {
-        if(contDistNormal == null){
-            return 0.0;
-        }
-        return contDistNormal.sample();
+        return serviceTime.sample();
     }
 
     //Retorna um intervalo de tempo para o próximo tempo entre chegadas de um paciente
     //Retorna uma amostra do fluxo aleatório usado para determinar
     protected double getPacienteArrivalTime() {
-        return contDistExponential.sample();
+        return pacienteArrivalTime.sample();
     }
 
     //Intervalo de tempo de um serviço 
-    protected double getServidorServiceTime() {
-        return contDistUniform.sample();
-    }
+    //protected double getServidorServiceTime() {
+        //return serviceTime.sample();
+    //}
 
     /**
      * run the model *
@@ -245,7 +242,7 @@ public class HospitalModel extends Model {
 
         // set parametros do experimento
         exp.setShowProgressBar(true);  // display de progressão da simulação/exibe uma barra de progresso
-        exp.stop(new TimeInstant(1500));   // define o fim da simulação em 1500 minutos
+        exp.stop(new TimeInstant(tempoSimulação));   // define o fim da simulação em 1500 minutos
         exp.tracePeriod(new TimeInstant(0), new TimeInstant(100));  // define o período do rastreio
         exp.debugPeriod(new TimeInstant(0), new TimeInstant(50));   // e saída de depuração
         // ATENÇÃO!

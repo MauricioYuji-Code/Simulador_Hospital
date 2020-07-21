@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
-
-import desmoj.core.simulator.*;
+//package modelo;
+//import desmoj.core.simulator.*;
 
 /**
  *
  * @author Mauricio
  */
-
-public class Pacientes extends ExternalEvent{
+//public class Pacientes extends ExternalEvent{
     
     
-    private Integer numeroEventos;
+    //private Integer numeroEventos;
    
      /**
      * Pacientes constructor.
@@ -23,9 +21,9 @@ public class Pacientes extends ExternalEvent{
      * @param externalEventName Nome do evento externo
      * @param showInTrace Sinalizador para mostrar este evento externo em mensagens de rastreamento
      */
-    public Pacientes(Model model, String externalEventName , boolean showInTrace) {
-        super(model, externalEventName, showInTrace);
-    }
+   // public Pacientes(Model model, String externalEventName , boolean showInTrace) {
+       // super(model, externalEventName, showInTrace);
+   // }
     
      /**
      *Implemente esse método para expressar a semântica desse evento externo. 
@@ -35,13 +33,13 @@ public class Pacientes extends ExternalEvent{
      *Realimentação do modelo
      * Controle de eventos da simulação.
      **/
-    @Override
-    public void eventRoutine(){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   // @Override
+    //public void eventRoutine(){
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         //Instanciar o modelo utilizado
         //instanciar a entidade
         //ativar o tempo de span
         
-    }
+   // }
     
-}
+//}
