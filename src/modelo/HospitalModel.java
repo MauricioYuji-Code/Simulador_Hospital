@@ -244,7 +244,7 @@ public class HospitalModel extends Model {
         // set parametros do experimento
         exp.setShowProgressBar(true);  // display de progressão da simulação/exibe uma barra de progresso
         exp.stop(new TimeInstant(tempoSimulação, TimeUnit.MINUTES));   // define o fim da simulação em 1500 minutos
-        exp.tracePeriod(new TimeInstant(0), new TimeInstant(100, TimeUnit.MINUTES));  // define o período do rastreio
+        exp.tracePeriod(new TimeInstant(0), new TimeInstant(200, TimeUnit.MINUTES));  // define o período do rastreio, que a simulacao abc ira parar
         exp.debugPeriod(new TimeInstant(0), new TimeInstant(50, TimeUnit.MINUTES));   // e saída de depuração
         // ATENÇÃO!
         // Não use períodos muito longos. Caso contrário, uma enorme página HTML será
