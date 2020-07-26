@@ -31,7 +31,7 @@ public class HospitalModel extends Model {
     //Enfileirar SimProcess (Entidades) - Ordem padrão ->FIFO
     //Ex: Toda vez que um peciente chega, ele é inserido nessa fila 
     //e será removido por um servidor.
-    protected ProcessQueue <Paciente> filaPacientes;
+    protected ProcessQueue <Paciente> filaPacientesRecepcao;
 
     // Pode ser utilizado para as entidades internas/servidores do modelo
     //Se não houver áciente aguardando , a recepcap retornará aqui
@@ -180,7 +180,7 @@ public class HospitalModel extends Model {
         // "Fila de pacientes" = o nome da fila
         // true = mostra no relatório?
         // true = mostra no rastreamento?
-        filaPacientes = new ProcessQueue<Paciente>(this, "Fila de pacientes", true, true);
+        filaPacientesRecepcao = new ProcessQueue<Paciente>(this, "Fila de pacientes", true, true);
 
         /*Exemplo "Pode ser utilizado para as entidades internas/servidores do modelo"*/
         // inicializa o osciosidadeRecepcao (recepcionista prontos para o serviço)

@@ -71,9 +71,9 @@ public class Paciente extends SimProcess {
 
         // entra na fila
         // Ao inserir o Paciente na fila, fazemos a fila mantendo o controle dos dados estatísticos automaticamente. 
-        myModel.filaPacientes.insert(this);
+        myModel.filaPacientesRecepcao.insert(this);
         // usada para inserir texto adicional na saída do arquivo de rastreamento. Essa é uma maneira muito útil de tornar o arquivo de rastreamento mais compreensível para o leitor. 
-        sendTraceNote("PacienteQueuelength:" + myModel.filaPacientes.length());
+        sendTraceNote("PacienteQueuelength:" + myModel.filaPacientesRecepcao.length());
 
         //Adicionaro condição para ver se o proximo serviço está disponivel
         //Testarei com a recepcção

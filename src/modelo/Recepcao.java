@@ -62,7 +62,7 @@ public class Recepcao extends SimProcess{
         
          while(true) { 
          // verifica se há alguém esperando
-         if (myModel.filaPacientes.isEmpty ()) {
+         if (myModel.filaPacientesRecepcao.isEmpty ()) {
              
              // NÃO, não há ninguém aguardando 
              
@@ -75,9 +75,9 @@ public class Recepcao extends SimProcess{
              // SIM, existe um cliente (paciente) aguardando 
              
              // obter uma referência ao primeiro caminhão da fila de caminhões 
-            Paciente proximoPaciente = myModel.filaPacientes.first(); 
+            Paciente proximoPaciente = myModel.filaPacientesRecepcao.first(); 
             // remove o caminhão da fila 
-            myModel.filaPacientes.remove (proximoPaciente);
+            myModel.filaPacientesRecepcao.remove (proximoPaciente);
     
               // agora atenda 
             // o tempo de serviço é representado por uma retenção da retenção do processo 
