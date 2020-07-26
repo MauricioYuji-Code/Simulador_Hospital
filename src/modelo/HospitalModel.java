@@ -33,6 +33,7 @@ public class HospitalModel extends Model {
     //e será removido por um servidor.
     protected ProcessQueue <Paciente> filaPacientesRecepcao;
 
+    /*Fila dos servidores*/
     // Pode ser utilizado para as entidades internas/servidores do modelo
     //Se não houver áciente aguardando , a recepcap retornará aqui
     //e aguarde o próximo paciente chegar.
@@ -64,7 +65,8 @@ public class HospitalModel extends Model {
     //public ContDistNormal contDistNormal;
 
     //constantes
-    protected static int NUM_RECEPCIONISTA = 1;
+    protected static int NUM_RECEPCIONISTA = 2;
+    protected static int NUM_ENFERMEIRAS = 1;
 
     //dados de entrada da simulação
     static double tempoSimulação;
