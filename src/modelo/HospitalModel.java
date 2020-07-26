@@ -32,14 +32,7 @@ public class HospitalModel extends Model {
     //Ex: Toda vez que um peciente chega, ele é inserido nessa fila 
     //e será removido por um servidor.
     protected ProcessQueue <Paciente> filaPacientesRecepcao;
-
-    /*Fila dos servidores*/
-    // Pode ser utilizado para as entidades internas/servidores do modelo
-    //Se não houver áciente aguardando , a recepcap retornará aqui
-    //e aguarde o próximo paciente chegar.
-    protected ProcessQueue<Recepcao> osciosidadeRecepcao;
-    protected ProcessQueue<Triagem> osciosidadeTriagem;
-
+    
     //Fluxo de números aleatórios para os horários de chegada
     //Fluxo de números aleatórios para modelar o intervalo de tempo entre a chegada
     //Fluxo de número aleatório usado para desenhar uma hora de chegada para o próximo paciente.
@@ -48,11 +41,19 @@ public class HospitalModel extends Model {
     //paciente arrival time
     public ContDistExponential pacienteArrivalTime;
 
+                /************Servidores************/
+    // Pode ser utilizado para as entidades internas/servidores do modelo
+    //Se não houver áciente aguardando , a recepcap retornará aqui
+    //e aguarde o próximo paciente chegar.
+    protected ProcessQueue<Recepcao> osciosidadeRecepcao;
+    protected ProcessQueue<Triagem> osciosidadeTriagem;
+
     //Fluxo de números aleatórios usado para desenhar um tempo de serviço para um paciente.
     //Provê o tempo de um serviço.
     //Exemplo: atendimento leva-se de um 3 a 7 min
     //service time
     public ContDistUniform serviceTimeRecepcao;
+    public ContDistUniform serviceTimeTriagem;
 
     //Fluxo de números aleatórios 
     //Fluxo uniformemente distribuído de números pseudo-aleatórios do tipo long.
@@ -202,6 +203,10 @@ public class HospitalModel extends Model {
     //Retorna um intervalo de tempo para o tempo de serviço 
     protected double getServiceTimeRecepcao() {
         return serviceTimeRecepcao.sample();
+    }
+    
+    protected double getServiceTimeTriagem() {
+        return serviceTimeTriagem.sample();
     }
 
     //Retorna um intervalo de tempo para o próximo tempo entre chegadas de um paciente
