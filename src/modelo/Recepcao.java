@@ -81,7 +81,7 @@ public class Recepcao extends SimProcess{
     
               // agora atenda 
             // o tempo de serviço é representado por uma retenção da retenção do processo 
-             hold(new TimeSpan(myModel.getServiceTime(), TimeUnit.MINUTES));
+             hold(new TimeSpan(myModel.getServiceTimeRecepcao(), TimeUnit.MINUTES));
             // de dentro para fora ... 
             // ... desenha um novo período de tempo de serviço 
             // ... cria um objeto TimeSpan com ele 

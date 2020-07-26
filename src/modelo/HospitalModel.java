@@ -38,6 +38,7 @@ public class HospitalModel extends Model {
     //Se não houver áciente aguardando , a recepcap retornará aqui
     //e aguarde o próximo paciente chegar.
     protected ProcessQueue<Recepcao> osciosidadeRecepcao;
+    protected ProcessQueue<Triagem> osciosidadeTriagem;
 
     //Fluxo de números aleatórios para os horários de chegada
     //Fluxo de números aleatórios para modelar o intervalo de tempo entre a chegada
@@ -51,7 +52,7 @@ public class HospitalModel extends Model {
     //Provê o tempo de um serviço.
     //Exemplo: atendimento leva-se de um 3 a 7 min
     //service time
-    public ContDistUniform serviceTime;
+    public ContDistUniform serviceTimeRecepcao;
 
     //Fluxo de números aleatórios 
     //Fluxo uniformemente distribuído de números pseudo-aleatórios do tipo long.
@@ -153,12 +154,12 @@ public class HospitalModel extends Model {
         // inicializa o serviceTimeStream
         // Parâmetros:
         // this = pertence a este modelo
-        // "serviceTime" = o nome do fluxo
+        // "serviceTimeRecepcao" = o nome do fluxo
         // 3.0 = tempo mínimo em minutos de atendimento
         // 7.0 = tempo máximo em minutos de atendimento
         // true = mostra no relatório?
         // false = mostra no rastreamento?
-        serviceTime = new ContDistUniform(this, "ServiceTimeStream",
+        serviceTimeRecepcao = new ContDistUniform(this, "ServiceTimeStream",
                 3.0, 7.0, true, false);
 
         // ... init () continua
@@ -199,8 +200,8 @@ public class HospitalModel extends Model {
      * **Getter's and  Setter's***
      */
     //Retorna um intervalo de tempo para o tempo de serviço 
-    protected double getServiceTime() {
-        return serviceTime.sample();
+    protected double getServiceTimeRecepcao() {
+        return serviceTimeRecepcao.sample();
     }
 
     //Retorna um intervalo de tempo para o próximo tempo entre chegadas de um paciente
@@ -211,7 +212,7 @@ public class HospitalModel extends Model {
 
     //Intervalo de tempo de um serviço 
     //protected double getServidorServiceTime() {
-        //return serviceTime.sample();
+        //return serviceTimeRecepcao.sample();
     //}
 
     /**
