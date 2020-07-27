@@ -152,7 +152,7 @@ public class HospitalModel extends Model {
      */
     @Override
     public void init() {
-
+                            /*****SERVIÇOS*****/
         // inicializa o serviceTimeStream
         // Parâmetros:
         // this = pertence a este modelo
@@ -162,6 +162,9 @@ public class HospitalModel extends Model {
         // true = mostra no relatório?
         // false = mostra no rastreamento?
         serviceTimeRecepcao = new ContDistUniform(this, "Recepcao ServiceTimeStream",
+                3.0, 7.0, true, false);
+        
+        serviceTimeTriagem = new ContDistUniform(this, "Triagem ServiceTimeStream",
                 3.0, 7.0, true, false);
 
         // ... init () continua
@@ -174,18 +177,22 @@ public class HospitalModel extends Model {
         // false = mostra no rastreamento?
         pacienteArrivalTime = new ContDistExponential(this, "ChegadaPaciente TimeStream",
                 3.0, true, false);
-
+        
         // necessário porque o horário de chegada não pode ser negativo, mas
         // uma amostra de uma distribuição exponencial pode ...
         pacienteArrivalTime.setNonNegative(true);
-
+        
+        
+                            /*****FILAS*****/
         // inicializa o pacienteQueue
         // Parâmetros:
         // this = pertence a este modelo
         // "Fila de pacientes" = o nome da fila
         // true = mostra no relatório?
         // true = mostra no rastreamento?
-        filaPacientesRecepcao = new ProcessQueue<Paciente>(this, "Fila de pacientes", true, true);
+        filaPacientesRecepcao = new ProcessQueue<Paciente>(this, "Fila de pacientes para recepcao", true, true);
+        
+        filaPacientesTriagem = new ProcessQueue<Paciente>(this, "Fila de pacientes para triagem", true, true);
 
         /*Exemplo "Pode ser utilizado para as entidades internas/servidores do modelo"*/
         // inicializa o osciosidadeRecepcao (recepcionista prontos para o serviço)
@@ -196,6 +203,8 @@ public class HospitalModel extends Model {
         // true = mostra no rastreamento?
         //Objeto:
         osciosidadeRecepcao = new ProcessQueue <Recepcao> (this, "Fila de espera de atendimento (osciosidade recepcao)", true, true);
+        
+        osciosidadeTriagem = new ProcessQueue <Triagem> (this, "Fila de espera de atendimento (osciosidade triagem)", true, true);
     }
 
     /**
