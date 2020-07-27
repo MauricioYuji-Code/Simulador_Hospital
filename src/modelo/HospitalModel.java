@@ -32,6 +32,7 @@ public class HospitalModel extends Model {
     //Ex: Toda vez que um peciente chega, ele é inserido nessa fila 
     //e será removido por um servidor.
     protected ProcessQueue <Paciente> filaPacientesRecepcao;
+    protected ProcessQueue <Paciente> filaPacientesTriagem;
     
     //Fluxo de números aleatórios para os horários de chegada
     //Fluxo de números aleatórios para modelar o intervalo de tempo entre a chegada
@@ -160,7 +161,7 @@ public class HospitalModel extends Model {
         // 7.0 = tempo máximo em minutos de atendimento
         // true = mostra no relatório?
         // false = mostra no rastreamento?
-        serviceTimeRecepcao = new ContDistUniform(this, "ServiceTimeStream",
+        serviceTimeRecepcao = new ContDistUniform(this, "Recepcao ServiceTimeStream",
                 3.0, 7.0, true, false);
 
         // ... init () continua
@@ -171,7 +172,7 @@ public class HospitalModel extends Model {
         // 3.0 = tempo médio em minutos entre a chegada de pacientes
         // true = mostra no relatório?
         // false = mostra no rastreamento?
-        pacienteArrivalTime = new ContDistExponential(this, "ChegadaPacienteTimeStream",
+        pacienteArrivalTime = new ContDistExponential(this, "ChegadaPaciente TimeStream",
                 3.0, true, false);
 
         // necessário porque o horário de chegada não pode ser negativo, mas
@@ -194,7 +195,7 @@ public class HospitalModel extends Model {
         // true = mostra no relatório?
         // true = mostra no rastreamento?
         //Objeto:
-        osciosidadeRecepcao = new ProcessQueue <Recepcao> (this, "Fila de espera da recepcao inativa", true, true);
+        osciosidadeRecepcao = new ProcessQueue <Recepcao> (this, "Fila de espera de atendimento (osciosidade recepcao)", true, true);
     }
 
     /**

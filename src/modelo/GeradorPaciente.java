@@ -47,7 +47,7 @@ public class GeradorPaciente extends SimProcess {
         // loop sem fim:
         while (true) {
 
-            // cria um novo caminhão
+            // cria um novo paciente
             // Parâmetros:
             // model = faz parte desse modelo
             // "Paciente" = nome do objeto
