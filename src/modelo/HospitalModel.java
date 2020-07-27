@@ -137,6 +137,10 @@ public class HospitalModel extends Model {
             // Use TimeSpan para ativar um processo após um período de tempo relativo ao tempo real da simulação,
             // ou use TimeInstant para ativar o processo em um ponto absoluto no tempo.
         }
+        for (int i = 0; i < NUM_ENFERMEIRAS; i++) {
+            Triagem enfermeira = new Triagem(this, "Enfermeira", true);
+            enfermeira.activate();
+        }
 
         // cria e ativa o processo de gerador de pacientes
         GeradorPaciente geradorPaciente = new GeradorPaciente(this, "ChegadaPaciente", false);
