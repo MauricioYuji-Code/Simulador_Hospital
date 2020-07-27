@@ -68,7 +68,8 @@ public class Paciente extends SimProcess {
         /**
          * *Descrever o ciclo de vida do paciente**
          */
-
+        
+        /*RECEPCAO*/
         // entra na fila
         // Ao inserir o Paciente na fila, fazemos a fila mantendo o controle dos dados estatísticos automaticamente. 
         myModel.filaPacientesRecepcao.insert(this);
@@ -101,6 +102,17 @@ public class Paciente extends SimProcess {
         // Posso ir para o proximo servidor do sistema 
         // uma mensagem para o arquivo de rastreamento
         sendTraceNote("O paciente foi atendido pela recepcao");
+        
+        /*TRIAGEM*/
+        myModel.filaPacientesTriagem.insert(this);
+        sendTraceNote("PacienteQueuelength:" + myModel.filaPacientesTriagem.length());
+        if (!myModel.osciosidadeTriagem.isEmpty()) {
+         Triagem enfermeira = myModel.osciosidadeTriagem.first ();
+         myModel.osciosidadeTriagem.remove (enfermeira);
+         enfermeira.activateAfter (this);
+      }
+        passivate();
+        sendTraceNote("O paciente foi atendido pela triagem");
 
     }
 
