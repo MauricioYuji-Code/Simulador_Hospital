@@ -17,7 +17,7 @@
 <tr valign="top"><td><b><div align="left">Property</div></b></td><td><b><div align="left">Content</div></b></td></tr>
 <tr valign="top"></tr>
 <tr valign="top"><td>Simulation duration</td><td>Experiment run from 0.0000 until 90000.0000.</td></tr>
-<tr valign="top"><td>Computation duration (HH:MM:SS)</td><td>00:00:00</td></tr>
+<tr valign="top"><td>Computation duration (HH:MM:SS)</td><td>00:00:01</td></tr>
 <tr valign="top"><td>Resets</td><td>No resets during the experiment run.</td></tr>
 <tr valign="top"><td>Seed</td><td>979</td></tr>
 <tr valign="top"><td>Errors</td><td>No errors or warnings have occurred.</td></tr>
@@ -26,19 +26,22 @@
 <hr><div align="center"><h3>Queues</h3></div>
 <table border="0" cellspacing="0" cellpadding="3" width="100%">
 <tr valign="top"><td><b><div align="left">Title</div></b></td><td><b><div align="left">Qorder</div></b></td><td><b><div align="left">(Re)set</div></b></td><td><b><div align="left">Obs</div></b></td><td><b><div align="left">QLimit</div></b></td><td><b><div align="left">Qmax</div></b></td><td><b><div align="left">Qnow</div></b></td><td><b><div align="left">Qavg.</div></b></td><td><b><div align="left">Zeros</div></b></td><td><b><div align="left">max.Wait</div></b></td><td><b><div align="left">avg.Wait</div></b></td><td><b><div align="left">refus.</div></b></td></tr>
-<tr valign="top"><td>Fila de pacientes para recepcao</td><td>FIFO</td><td>0.0000</td><td>502</td><td>unlimit.</td><td>12</td><td>0</td><td>1.92217</td><td>127</td><td>1621.9398</td><td>344.6114</td><td>0</td></tr>
-<tr valign="top"><td>Fila de pacientes para triagem</td><td>FIFO</td><td>0.0000</td><td>298</td><td>unlimit.</td><td>202</td><td>202</td><td>95.47139</td><td>3</td><td>35520.3390</td><td>16421.9663</td><td>0</td></tr>
-<tr valign="top"><td>Fila de espera de atendimento (osciosidade recepcao)</td><td>FIFO</td><td>0.0000</td><td>127</td><td>unlimit.</td><td>2</td><td>0</td><td>0.32132</td><td>1</td><td>1373.6306</td><td>227.7056</td><td>0</td></tr>
-<tr valign="top"><td>Fila de espera de atendimento (osciosidade triagem)</td><td>FIFO</td><td>0.0000</td><td>3</td><td>unlimit.</td><td>1</td><td>0</td><td>0.00597</td><td>0</td><td>235.1912</td><td>179.0348</td><td>0</td></tr>
+<tr valign="top"><td>Fila de pacientes para recepcao</td><td>FIFO</td><td>0.0000</td><td>1536</td><td>unlimit.</td><td>4</td><td>0</td><td>0.01819</td><td>1469</td><td>85.0063</td><td>1.0659</td><td>0</td></tr>
+<tr valign="top"><td>Fila de pacientes para triagem</td><td>FIFO</td><td>0.0000</td><td>1458</td><td>unlimit.</td><td>84</td><td>72</td><td>29.00946</td><td>77</td><td>4716.0532</td><td>1670.3596</td><td>0</td></tr>
+<tr valign="top"><td>Fila de pacientes para atendimento medico</td><td>FIFO</td><td>0.0000</td><td>120</td><td>unlimit.</td><td>1335</td><td>1335</td><td>654.52027</td><td>1</td><td>81500.8098</td><td>40431.4651</td><td>0</td></tr>
+<tr valign="top"><td>Fila de espera de atendimento (osciosidade recepcao)</td><td>FIFO</td><td>0.0000</td><td>1469</td><td>unlimit.</td><td>6</td><td>0</td><td>3.43839</td><td>1</td><td>825.3437</td><td>210.6571</td><td>0</td></tr>
+<tr valign="top"><td>Fila de espera de atendimento (osciosidade triagem)</td><td>FIFO</td><td>0.0000</td><td>77</td><td>unlimit.</td><td>3</td><td>0</td><td>0.0704</td><td>0</td><td>256.1901</td><td>82.2908</td><td>0</td></tr>
+<tr valign="top"><td>Fila de espera de atendimento (osciosidade atendimento medico)</td><td>FIFO</td><td>0.0000</td><td>1</td><td>unlimit.</td><td>1</td><td>0</td><td>0.00279</td><td>0</td><td>251.2480</td><td>251.2480</td><td>0</td></tr>
 </table><p></p>
 <font size="-1"><a href="#top">top</a></font><p></p>
 <hr><div align="center"><h3>Distributions</h3></div>
 <table border="0" cellspacing="0" cellpadding="3" width="100%">
 <tr valign="top"><td><b><div align="left">Title</div></b></td><td><b><div align="left">(Re)set</div></b></td><td><b><div align="left">Obs</div></b></td><td><b><div align="left">Type</div></b></td><td><b><div align="left">Parameter 1</div></b></td><td><b><div align="left">Parameter 2</div></b></td><td><b><div align="left">Parameter 3</div></b></td><td><b><div align="left">Seed</div></b></td></tr>
-<tr valign="top"><td>Recepcao ServiceTimeStream</td><td>0.0000</td><td>502</td><td>Cont Uniform</td><td>3.0</td><td>7.0</td><td> </td><td>9829105</td></tr>
-<tr valign="top"><td>Triagem ServiceTimeStream</td><td>0.0000</td><td>298</td><td>Cont Uniform</td><td>3.0</td><td>7.0</td><td> </td><td>68994544</td></tr>
-<tr valign="top"><td>ChegadaPaciente TimeStream</td><td>0.0000</td><td>502</td><td>Cont Exponential</td><td>3.0</td><td> </td><td> </td><td>3916028</td></tr>
+<tr valign="top"><td>Recepcao ServiceTimeStream</td><td>0.0000</td><td>1536</td><td>Cont Uniform</td><td>2.0</td><td>3.0</td><td> </td><td>9829105</td></tr>
+<tr valign="top"><td>Triagem ServiceTimeStream</td><td>0.0000</td><td>1458</td><td>Cont Uniform</td><td>2.0</td><td>4.0</td><td> </td><td>68994544</td></tr>
+<tr valign="top"><td>Atendimento Medico ServiceTimeStream</td><td>0.0000</td><td>120</td><td>Cont Uniform</td><td>10.0</td><td>15.0</td><td> </td><td>3916028</td></tr>
+<tr valign="top"><td>ChegadaPaciente TimeStream</td><td>0.0000</td><td>1536</td><td>Cont Exponential</td><td>1.0</td><td> </td><td> </td><td>39685667</td></tr>
 </table><p></p>
 <font size="-1"><a href="#top">top</a></font><p></p>
-<font size="-2">created using <a href="http://www.desmoj.de">DESMO-J</A> Version 2.5.1e at Mon Jul 27 16:32:37 BRT 2020 - DESMO-J is licensed under <A HREF=http://www.apache.org/licenses/LICENSE-2.0>Apache License, Version 2.0</A></font>
+<font size="-2">created using <a href="http://www.desmoj.de">DESMO-J</A> Version 2.5.1e at Tue Jul 28 15:14:28 BRT 2020 - DESMO-J is licensed under <A HREF=http://www.apache.org/licenses/LICENSE-2.0>Apache License, Version 2.0</A></font>
 </body></html>

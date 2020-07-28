@@ -33,6 +33,7 @@ public class HospitalModel extends Model {
     //e será removido por um servidor.
     protected ProcessQueue <Paciente> filaPacientesRecepcao;
     protected ProcessQueue <Paciente> filaPacientesTriagem;
+    protected ProcessQueue <Paciente> filaPacientesAtendimentoMedico;
     
     //Fluxo de números aleatórios para os horários de chegada
     //Fluxo de números aleatórios para modelar o intervalo de tempo entre a chegada
@@ -48,6 +49,7 @@ public class HospitalModel extends Model {
     //e aguarde o próximo paciente chegar.
     protected ProcessQueue<Recepcao> osciosidadeRecepcao;
     protected ProcessQueue<Triagem> osciosidadeTriagem;
+    protected ProcessQueue<AtendimentoMedico> osciosidadeAtendimentoMedico;
 
     //Fluxo de números aleatórios usado para desenhar um tempo de serviço para um paciente.
     //Provê o tempo de um serviço.
@@ -55,6 +57,7 @@ public class HospitalModel extends Model {
     //service time
     public ContDistUniform serviceTimeRecepcao;
     public ContDistUniform serviceTimeTriagem;
+    public ContDistUniform serviceTimeAtemdimentoMedico;
 
     //Fluxo de números aleatórios 
     //Fluxo uniformemente distribuído de números pseudo-aleatórios do tipo long.
@@ -68,8 +71,10 @@ public class HospitalModel extends Model {
     //public ContDistNormal contDistNormal;
 
     //constantes
-    protected static int NUM_RECEPCIONISTA = 2;
-    protected static int NUM_ENFERMEIRAS = 1;
+    protected static int NUM_RECEPCIONISTA = 6;
+    protected static int NUM_ENFERMEIRAS = 3;
+    protected static int NUM_MEDICOS = 1;
+    
 
     //dados de entrada da simulação
     static double tempoSimulação;
@@ -141,6 +146,11 @@ public class HospitalModel extends Model {
             Triagem enfermeira = new Triagem(this, "Enfermeira", true);
             enfermeira.activate();
         }
+        
+         for (int i = 0; i < NUM_MEDICOS; i++) {
+            AtendimentoMedico medico = new AtendimentoMedico(this, "Medico", true);
+            medico.activate();
+        }
 
         // cria e ativa o processo de gerador de pacientes
         GeradorPaciente geradorPaciente = new GeradorPaciente(this, "ChegadaPaciente", false);
@@ -166,10 +176,13 @@ public class HospitalModel extends Model {
         // true = mostra no relatório?
         // false = mostra no rastreamento?
         serviceTimeRecepcao = new ContDistUniform(this, "Recepcao ServiceTimeStream",
-                3.0, 7.0, true, false);
+                2.0, 3.0, true, false);
         
         serviceTimeTriagem = new ContDistUniform(this, "Triagem ServiceTimeStream",
-                3.0, 7.0, true, false);
+                2.0, 4.0, true, false);
+        
+        serviceTimeAtemdimentoMedico = new ContDistUniform(this, "Atendimento Medico ServiceTimeStream",
+                10.0, 15.0, true, false);
 
         // ... init () continua
         // inicializa o ArrivalTimeStream
@@ -180,7 +193,7 @@ public class HospitalModel extends Model {
         // true = mostra no relatório?
         // false = mostra no rastreamento?
         pacienteArrivalTime = new ContDistExponential(this, "ChegadaPaciente TimeStream",
-                3.0, true, false);
+                1.0, true, false);
         
         // necessário porque o horário de chegada não pode ser negativo, mas
         // uma amostra de uma distribuição exponencial pode ...
@@ -197,6 +210,8 @@ public class HospitalModel extends Model {
         filaPacientesRecepcao = new ProcessQueue<Paciente>(this, "Fila de pacientes para recepcao", true, true);
         
         filaPacientesTriagem = new ProcessQueue<Paciente>(this, "Fila de pacientes para triagem", true, true);
+        
+        filaPacientesAtendimentoMedico = new ProcessQueue<Paciente>(this, "Fila de pacientes para atendimento medico", true, true);
 
         /*Exemplo "Pode ser utilizado para as entidades internas/servidores do modelo"*/
         // inicializa o osciosidadeRecepcao (recepcionista prontos para o serviço)
@@ -209,6 +224,8 @@ public class HospitalModel extends Model {
         osciosidadeRecepcao = new ProcessQueue <Recepcao> (this, "Fila de espera de atendimento (osciosidade recepcao)", true, true);
         
         osciosidadeTriagem = new ProcessQueue <Triagem> (this, "Fila de espera de atendimento (osciosidade triagem)", true, true);
+        
+        osciosidadeAtendimentoMedico = new ProcessQueue <AtendimentoMedico> (this, "Fila de espera de atendimento (osciosidade atendimento medico)", true, true);
     }
 
     /**
@@ -221,6 +238,10 @@ public class HospitalModel extends Model {
     
     protected double getServiceTimeTriagem() {
         return serviceTimeTriagem.sample();
+    }
+    
+    protected double getServiceTimeAtendimentoMedico() {
+        return serviceTimeAtemdimentoMedico.sample();
     }
 
     //Retorna um intervalo de tempo para o próximo tempo entre chegadas de um paciente

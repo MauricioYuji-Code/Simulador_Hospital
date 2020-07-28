@@ -34,7 +34,7 @@ public class Paciente extends SimProcess {
      * acessar os componentes estáticos do modelo
      */
     private HospitalModel myModel;
-    private int id; //identificador do paciente
+    //private int id; //identificador do paciente
 
     /**
      * Constructs
@@ -48,7 +48,7 @@ public class Paciente extends SimProcess {
      */
     public Paciente(Model model, String entityName, boolean showInTrace) {
         super(model, entityName, showInTrace);
-        this.id = id;
+        //this.id = id;
         this.myModel = (HospitalModel) model;
     }
 
@@ -74,7 +74,7 @@ public class Paciente extends SimProcess {
         // Ao inserir o Paciente na fila, fazemos a fila mantendo o controle dos dados estatísticos automaticamente. 
         myModel.filaPacientesRecepcao.insert(this);
         // usada para inserir texto adicional na saída do arquivo de rastreamento. Essa é uma maneira muito útil de tornar o arquivo de rastreamento mais compreensível para o leitor. 
-        sendTraceNote("PacienteQueuelength:" + myModel.filaPacientesRecepcao.length());
+        sendTraceNote("Comprimento da fila de pacientes (Recepcao): " + myModel.filaPacientesRecepcao.length());
 
         //Adicionaro condição para ver se o proximo serviço está disponivel
         //Testarei com a recepcção
@@ -101,18 +101,29 @@ public class Paciente extends SimProcess {
         // Ok, estou novamente online, o que significa que fui atendido pela recepção 
         // Posso ir para o proximo servidor do sistema 
         // uma mensagem para o arquivo de rastreamento
-        sendTraceNote("O paciente foi atendido pela recepcao");
+        sendTraceNote("O paciente foi atendido pela recepcao!");
         
         /*TRIAGEM*/
         myModel.filaPacientesTriagem.insert(this);
-        sendTraceNote("PacienteQueuelength:" + myModel.filaPacientesTriagem.length());
+        sendTraceNote("Comprimento da fila de pacientes (Triagem): " + myModel.filaPacientesTriagem.length());
         if (!myModel.osciosidadeTriagem.isEmpty()) {
          Triagem enfermeira = myModel.osciosidadeTriagem.first ();
          myModel.osciosidadeTriagem.remove (enfermeira);
          enfermeira.activateAfter (this);
       }
         passivate();
-        sendTraceNote("O paciente foi atendido pela triagem");
+        sendTraceNote("O paciente foi atendido pela triagem!");
+        
+         /*ATENDIMENTO MÉDICO*/
+        myModel.filaPacientesAtendimentoMedico.insert(this);
+        sendTraceNote("Comprimento da fila de pacientes (Atendimento Medico): " + myModel.filaPacientesAtendimentoMedico.length());
+        if (!myModel.osciosidadeAtendimentoMedico.isEmpty()) {
+         AtendimentoMedico medico = myModel.osciosidadeAtendimentoMedico.first ();
+         myModel.osciosidadeAtendimentoMedico.remove (medico);
+         medico.activateAfter (this);
+      }
+        passivate();
+        sendTraceNote("O paciente foi atendido pelo medico!");
 
     }
 
