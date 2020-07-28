@@ -40,7 +40,7 @@ public class AtendimentoMedico extends SimProcess{
             } else {
                 // SIM, existe um cliente (paciente) aguardando 
 
-                // obter uma referência ao primeiro caminhão da fila de caminhões 
+                // obter uma referência ao primeiro caminhão da fila de pacientes 
                 Paciente proximoPaciente = myModel.filaPacientesAtendimentoMedico.first();
                 // remove o caminhão da fila 
                 myModel.filaPacientesAtendimentoMedico.remove(proximoPaciente);
