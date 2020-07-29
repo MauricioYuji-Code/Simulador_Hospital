@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.spi.DirStateFactory;
 
 /**
  *
@@ -23,7 +22,7 @@ public class ConnectionFactory {
     private final String DRIVER = "com.mysql.jdbc.Driver";
     private final String URL = "jdbc:mysql://localhost:3306/HOSPITAL_MODEL";
     private final String USER = "root";
-    private final String PASS = "";
+    private final String PASS = "yujiyuji18";
 
     public Connection getConnection() {
 

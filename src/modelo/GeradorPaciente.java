@@ -5,11 +5,13 @@
  */
 package modelo;
 
+import bean.DPaciente;
 import co.paralleluniverse.fibers.SuspendExecution;
 import desmoj.core.simulator.Model;
 import desmoj.core.simulator.SimProcess;
 import desmoj.core.simulator.TimeSpan;
 import java.util.concurrent.TimeUnit;
+import sdk.PacienteSDK;
 
 /**
  *
@@ -54,6 +56,13 @@ public class GeradorPaciente extends SimProcess {
             // id do paciente -> parametro que o mauricio colocou
             // true = mostre o paciente no arquivo de rastreamento
             Paciente paciente = new Paciente(model, "Paciente", true);
+            
+            
+            //*Testes banco de dados*//
+            int idPaciente = (int)(paciente.getIdentNumber() - 11);
+            System.out.println("id do paciente: "+ idPaciente);
+            savePaciente(idPaciente);
+            
 
             // agora deixe o paciente recém-criado passar pelo hospital
             // o que significa que vamos ativá-lo após esse gerador de paciente
@@ -77,5 +86,15 @@ public class GeradorPaciente extends SimProcess {
 
         }
 
+    }
+    
+    public void savePaciente(int idPaciente){
+        
+        DPaciente p = new DPaciente();
+        PacienteSDK psdk = new PacienteSDK();
+        p.setIdPaciente(idPaciente);
+        psdk.create(p);
+        
+        
     }
 }
