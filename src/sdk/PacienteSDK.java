@@ -20,8 +20,8 @@ import java.util.logging.Logger;
  * Classe utilizada para comunicação BD
  */
 public class PacienteSDK {
-    
-    public void create (DPaciente p){
+    //Add id do paciente ao banco de dados
+    public void addPacienteId (DPaciente p){
         
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection con =  connectionFactory.getConnection();
@@ -43,6 +43,7 @@ public class PacienteSDK {
         
     }
                 /*Teste(ainda não fuciona)*/
+    //Retorna dados do banco referente ao paciente
     public int read(int idPaciente){
         System.out.println("Começando a projeção!");
         ConnectionFactory connectionFactory = new ConnectionFactory();

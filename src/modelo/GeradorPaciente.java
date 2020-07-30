@@ -93,7 +93,7 @@ public class GeradorPaciente extends SimProcess {
         DPaciente p = new DPaciente();
         PacienteSDK psdk = new PacienteSDK();
         p.setIdPaciente(idPaciente);
-        psdk.create(p);
+        psdk.addPacienteId(p);
         
         
     }
