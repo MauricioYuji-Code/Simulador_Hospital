@@ -5,9 +5,11 @@
  */
 package modelo;
 
+import bean.DPaciente;
 import co.paralleluniverse.fibers.SuspendExecution;
 import desmoj.core.simulator.*;
 import java.util.concurrent.TimeUnit;
+import sdk.PacienteSDK;
 
 /**
  *
@@ -34,6 +36,7 @@ public class Paciente extends SimProcess {
      * acessar os componentes estáticos do modelo
      */
     private HospitalModel myModel;
+    private Paciente paciente;
     //private int id; //identificador do paciente
 
     /**
@@ -50,6 +53,7 @@ public class Paciente extends SimProcess {
         super(model, entityName, showInTrace);
         //this.id = id;
         this.myModel = (HospitalModel) model;
+        paciente = this;
     }
 
     /**
@@ -68,7 +72,7 @@ public class Paciente extends SimProcess {
         /**
          * *Descrever o ciclo de vida do paciente**
          */
-        
+           getIdByIdPaciente();
         /*RECEPCAO*/
         // entra na fila
         // Ao inserir o Paciente na fila, fazemos a fila mantendo o controle dos dados estatísticos automaticamente. 
@@ -125,6 +129,16 @@ public class Paciente extends SimProcess {
         passivate();
         sendTraceNote("O paciente foi atendido pelo medico!");
 
+    }
+    
+    /*Teste(ainda não fuciona)*/
+    
+    public void getIdByIdPaciente(){
+        int idPaciente = (int)(paciente.getIdentNumber() - 11);
+        System.out.println("id do paciente(getIdByIdPaciente): "+ idPaciente);
+        PacienteSDK psdk = new PacienteSDK();
+        psdk.read(idPaciente);
+     
     }
 
 }
