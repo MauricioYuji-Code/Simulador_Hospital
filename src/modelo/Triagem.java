@@ -46,7 +46,8 @@ public class Triagem extends SimProcess {
                 // remove o caminhão da fila 
                 myModel.filaPacientesTriagem.remove(proximoPaciente);
                 int idProximoPaciente = (int) (proximoPaciente.getIdentNumber() - 11);
-                System.out.println("Id do proximo paciente (Triagem): "+ idProximoPaciente);
+                System.out.println("Id do proximo paciente (Triagem): " + idProximoPaciente);
+
                 // agora atenda 
                 // o tempo de serviço é representado por uma retenção da retenção do processo 
                 hold(new TimeSpan(myModel.getServiceTimeTriagem(), TimeUnit.MINUTES));
@@ -61,6 +62,10 @@ public class Triagem extends SimProcess {
             }
 
         }
+
+    }
+
+    public void addClassificacaoById(int idProximoPaciente) {
 
     }
 

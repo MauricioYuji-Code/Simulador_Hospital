@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Mauricio
  */
-public class AtendimentoMedico extends SimProcess{
-    
+public class AtendimentoMedico extends SimProcess {
+
     private HospitalModel myModel;
 
     public AtendimentoMedico(Model model, String nome, boolean showInTrace) {
@@ -26,7 +26,7 @@ public class AtendimentoMedico extends SimProcess{
 
     @Override
     public void lifeCycle() throws SuspendExecution {
-        
+
         while (true) {
             // verifica se há alguém esperando
             if (myModel.filaPacientesAtendimentoMedico.isEmpty()) {
@@ -59,7 +59,15 @@ public class AtendimentoMedico extends SimProcess{
             }
 
         }
-     
+
     }
-    
+
+    public void addExameById(int idProximoPaciente) {
+
+    }
+
+    public void addMedicacaoById(int idProximoPaciente) {
+
+    }
+
 }
