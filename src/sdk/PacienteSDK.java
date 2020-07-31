@@ -171,5 +171,58 @@ public class PacienteSDK {
         }
 
     }
+    
+    public String getMedicamentoById(int idPaciente) {
+        System.out.println("Começando a projeção!");
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        Connection con = connectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String confirmacaoMedicamento = "";
+
+        try {
+            stmt = con.prepareStatement("select c_medicamento from paciente where idpaciente = ?");
+            stmt.setInt(1, idPaciente);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                //DPaciente dp = new DPaciente();
+                //dp.setIdPaciente(rs.getInt("idPaciente"));
+                confirmacaoMedicamento = rs.getString("c_exame");
+                System.out.println("Confirma medicamento?: " + rs.getString("c_exame"));
+                System.out.println("verificado com sucesso com sucesso!");
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("Falha na projeção!");
+            Logger.getLogger(PacienteSDK.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+        System.out.println("A funcao read retornou = " + confirmacaoMedicamento);
+        return confirmacaoMedicamento;
+    }
+
+    public void setMedicamentoById(int idPaciente, String confirmacao_medicamento) {
+
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        Connection con = connectionFactory.getConnection();
+
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("update paciente set c_medicamento = ? where idpaciente = ?");
+            stmt.setString(1, confirmacao_medicamento);
+            stmt.setInt(2, idPaciente);
+
+            stmt.executeUpdate();
+            System.out.println("confirmacao do medicamento atualizado com sucesso!");
+        } catch (SQLException ex) {
+            System.out.println("Erro ao atualizar!");
+            Logger.getLogger(PacienteSDK.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+
+    }
 
 }
