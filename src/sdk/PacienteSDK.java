@@ -42,25 +42,45 @@ public class PacienteSDK {
         }
         
     }
-                /*Teste(ainda não fuciona)*/
+    
+    public void resetDB (){
+        
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        Connection con =  connectionFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("delete from paciente");
+            stmt.executeUpdate();
+            System.out.println("Resetado com sucesso!");
+        } catch (SQLException ex) {
+            System.out.println("Erro ao resetar!");
+            Logger.getLogger(PacienteSDK.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+        
+    }
+ 
     //Retorna dados do banco referente ao paciente
-    public int read(int idPaciente){
+    public String getClassificacaoById(int idPaciente){
         System.out.println("Começando a projeção!");
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection con =  connectionFactory.getConnection();
         PreparedStatement stmt = null;    
         ResultSet rs = null;
-        int id = 0;
+        String classificacao = "";
         
         try {
-            stmt = con.prepareStatement("select idpaciente from paciente where idpaciente = ?");
+            stmt = con.prepareStatement("select classificacao from paciente where idpaciente = ?");
             stmt.setInt(1, idPaciente);
             rs = stmt.executeQuery();
             while(rs.next()){
             //DPaciente dp = new DPaciente();
             //dp.setIdPaciente(rs.getInt("idPaciente"));
-            id = rs.getInt("IDPACIENTE");
-            System.out.println("Numero pego: "+rs.getInt("IDPACIENTE"));
+            classificacao = rs.getString("classificacao");
+            System.out.println("classificacao pega: "+rs.getString("classificacao"));
             System.out.println("Pego com sucesso!");
             
             }
@@ -70,8 +90,8 @@ public class PacienteSDK {
         }finally{
             ConnectionFactory.closeConnection(con, stmt);
         }
-        System.out.println("A funcao read retornou = "+id);
-        return id;
+        System.out.println("A funcao read retornou = "+classificacao);
+        return classificacao;
     }
     
     

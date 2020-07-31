@@ -15,6 +15,7 @@ import desmoj.core.simulator.ProcessQueue;
 import desmoj.core.simulator.TimeInstant;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import sdk.PacienteSDK;
 
 /**
  *
@@ -305,6 +306,10 @@ public class HospitalModel extends Model {
 
         // interrompa todos os threads ainda ativos e feche todos os arquivos de saída
         exp.finish();
+        
+        //reset db
+        PacienteSDK psdk = new PacienteSDK();
+        psdk.resetDB();
     }
 
 }

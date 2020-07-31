@@ -72,7 +72,6 @@ public class Paciente extends SimProcess {
         /**
          * *Descrever o ciclo de vida do paciente**
          */
-           getIdByIdPaciente();
         /*RECEPCAO*/
         // entra na fila
         // Ao inserir o Paciente na fila, fazemos a fila mantendo o controle dos dados estatísticos automaticamente. 
@@ -82,23 +81,22 @@ public class Paciente extends SimProcess {
 
         //Adicionaro condição para ver se o proximo serviço está disponivel
         //Testarei com a recepcção
-        
         //...Efetuando condição de disponibilidade do serviço!
         //Verificação se a "fila" de servico da recepção está disponivel.
         if (!myModel.osciosidadeRecepcao.isEmpty()) {
-         // Sim, ele é
+            // Sim, ele é
 
-         // obtém uma referência ao primeiro funcionario 
-         // da recepcao da fila de recepcionistas ociosos
-         Recepcao recepcionista = myModel.osciosidadeRecepcao.first ();
-         // remova a recepcionista da fila
-         myModel.osciosidadeRecepcao.remove (recepcionista);
+            // obtém uma referência ao primeiro funcionario 
+            // da recepcao da fila de recepcionistas ociosos
+            Recepcao recepcionista = myModel.osciosidadeRecepcao.first();
+            // remova a recepcionista da fila
+            myModel.osciosidadeRecepcao.remove(recepcionista);
 
-         // coloque o funcionario da recepcao na lista de eventos logo depois de mim,
-         // para garantir que eu seja o próximo cliente a receber manutenção
-         recepcionista.activateAfter (this);
-      }
-         
+            // coloque o funcionario da recepcao na lista de eventos logo depois de mim,
+            // para garantir que eu seja o próximo cliente a receber manutenção
+            recepcionista.activateAfter(this);
+        }
+
         // espera pelo serviço 
         passivate();
 
@@ -106,39 +104,53 @@ public class Paciente extends SimProcess {
         // Posso ir para o proximo servidor do sistema 
         // uma mensagem para o arquivo de rastreamento
         sendTraceNote("O paciente foi atendido pela recepcao!");
-        
+
         /*TRIAGEM*/
         myModel.filaPacientesTriagem.insert(this);
         sendTraceNote("Comprimento da fila de pacientes (Triagem): " + myModel.filaPacientesTriagem.length());
         if (!myModel.osciosidadeTriagem.isEmpty()) {
-         Triagem enfermeira = myModel.osciosidadeTriagem.first ();
-         myModel.osciosidadeTriagem.remove (enfermeira);
-         enfermeira.activateAfter (this);
-      }
+            Triagem enfermeira = myModel.osciosidadeTriagem.first();
+            myModel.osciosidadeTriagem.remove(enfermeira);
+            enfermeira.activateAfter(this);
+        }
         passivate();
         sendTraceNote("O paciente foi atendido pela triagem!");
-        
-         /*ATENDIMENTO MÉDICO*/
+
+        /*ATENDIMENTO MÉDICO*/
+        //**OBS: ADPTAR PARA AS DEMAIS FILAS
+        getClassificacao();
         myModel.filaPacientesAtendimentoMedico.insert(this);
         sendTraceNote("Comprimento da fila de pacientes (Atendimento Medico): " + myModel.filaPacientesAtendimentoMedico.length());
         if (!myModel.osciosidadeAtendimentoMedico.isEmpty()) {
-         AtendimentoMedico medico = myModel.osciosidadeAtendimentoMedico.first ();
-         myModel.osciosidadeAtendimentoMedico.remove (medico);
-         medico.activateAfter (this);
-      }
+            AtendimentoMedico medico = myModel.osciosidadeAtendimentoMedico.first();
+            myModel.osciosidadeAtendimentoMedico.remove(medico);
+            medico.activateAfter(this);
+        }
         passivate();
         sendTraceNote("O paciente foi atendido pelo medico!");
 
     }
-    
-    /*Teste(ainda não fuciona)*/
-    
-    public void getIdByIdPaciente(){
-        int idPaciente = (int)(paciente.getIdentNumber() - 11);
-        System.out.println("id do paciente(getIdByIdPaciente): "+ idPaciente);
+
+    //Get Classificacao do paciente
+    public String getClassificacao() {
+        int idPaciente = (int) (paciente.getIdentNumber() - 11);
+        System.out.println("id do paciente(getIdByIdPaciente): " + idPaciente);
         PacienteSDK psdk = new PacienteSDK();
-        psdk.read(idPaciente);
-     
+        psdk.getClassificacaoById(idPaciente);
+        System.out.println("Classificacao  do paciente: " + psdk.getClassificacaoById(idPaciente));
+        return psdk.getClassificacaoById(idPaciente);
+    }
+
+    public void getConfirmacaoExame() {
+
+    }
+
+    public void getConfirmacaoMedicacao() {
+
+    }
+
+    public void getConfirmacaoRetorno() {
+
     }
 
 }
