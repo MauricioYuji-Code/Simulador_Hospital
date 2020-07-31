@@ -53,7 +53,7 @@ public class PacienteSDK {
         int id = 0;
         
         try {
-            stmt = con.prepareStatement("select * from paciente where idpaciente = ?");
+            stmt = con.prepareStatement("select idpaciente from paciente where idpaciente = ?");
             stmt.setInt(1, idPaciente);
             rs = stmt.executeQuery();
             while(rs.next()){
@@ -72,6 +72,30 @@ public class PacienteSDK {
         }
         System.out.println("A funcao read retornou = "+id);
         return id;
+    }
+    
+    
+    public void setClassificacaoById (int idPaciente, String classificacao){
+        
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        Connection con =  connectionFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("update paciente set classificacao = ? where idpaciente = ?");
+            stmt.setString(1, classificacao);
+            stmt.setInt(2, idPaciente);
+            
+            stmt.executeUpdate();
+            System.out.println("Classificacao atualizada com sucesso!");
+        } catch (SQLException ex) {
+            System.out.println("Erro ao atualizar!");
+            Logger.getLogger(PacienteSDK.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+        
     }
     
 }

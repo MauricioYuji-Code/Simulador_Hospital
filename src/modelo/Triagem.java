@@ -10,6 +10,7 @@ import desmoj.core.simulator.Model;
 import desmoj.core.simulator.SimProcess;
 import desmoj.core.simulator.TimeSpan;
 import java.util.concurrent.TimeUnit;
+import sdk.PacienteSDK;
 
 /**
  *
@@ -43,10 +44,14 @@ public class Triagem extends SimProcess {
 
                 // obter uma referência ao primeiro caminhão da fila de pacientes
                 Paciente proximoPaciente = myModel.filaPacientesTriagem.first();
-                // remove o caminhão da fila 
+                // remove o paciente da fila
                 myModel.filaPacientesTriagem.remove(proximoPaciente);
+                
+                //Add classificao do paciente ao banco
+                //OBS: ADPTAR A MELHOR FORMA DE CLASSIFICAR !!
                 int idProximoPaciente = (int) (proximoPaciente.getIdentNumber() - 11);
                 System.out.println("Id do proximo paciente (Triagem): " + idProximoPaciente);
+                setClassificacaoSDK(idProximoPaciente, "vermelho");
 
                 // agora atenda 
                 // o tempo de serviço é representado por uma retenção da retenção do processo 
@@ -65,8 +70,9 @@ public class Triagem extends SimProcess {
 
     }
 
-    public void addClassificacaoById(int idProximoPaciente) {
-
+    public void setClassificacaoSDK(int idProximoPaciente, String classificacao) {
+        PacienteSDK psdk = new PacienteSDK();
+        psdk.setClassificacaoById(idProximoPaciente, classificacao);
     }
 
 }
