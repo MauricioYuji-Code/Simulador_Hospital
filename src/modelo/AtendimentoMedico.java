@@ -10,6 +10,7 @@ import desmoj.core.simulator.Model;
 import desmoj.core.simulator.SimProcess;
 import desmoj.core.simulator.TimeSpan;
 import java.util.concurrent.TimeUnit;
+import sdk.PacienteSDK;
 
 /**
  *
@@ -45,6 +46,13 @@ public class AtendimentoMedico extends SimProcess {
                 // remove o caminhão da fila 
                 myModel.filaPacientesAtendimentoMedico.remove(proximoPaciente);
 
+                //Add confirmacao do exame/medicacao do paciente ao banco
+                //OBS: ADPTAR A MELHOR FORMA DE CONFIRMAR !!
+                int idProximoPaciente = (int) (proximoPaciente.getIdentNumber() - 11);
+                System.out.println("Id do proximo paciente (Triagem): " + idProximoPaciente);
+                setExameSDK(idProximoPaciente, "1");
+                setMedicacaoSDK(idProximoPaciente, "1");
+
                 // agora atenda 
                 // o tempo de serviço é representado por uma retenção da retenção do processo 
                 hold(new TimeSpan(myModel.getServiceTimeAtendimentoMedico(), TimeUnit.MINUTES));
@@ -64,9 +72,15 @@ public class AtendimentoMedico extends SimProcess {
 
     public void setExameSDK(int idProximoPaciente, String confirma_exame) {
 
+        PacienteSDK psdk = new PacienteSDK();
+        psdk.setExameById(idProximoPaciente, confirma_exame);
+
     }
 
     public void setMedicacaoSDK(int idProximoPaciente, String confirma_medicacao) {
+
+        PacienteSDK psdk = new PacienteSDK();
+        psdk.setMedicamentoById(idProximoPaciente, confirma_medicacao);
 
     }
 
