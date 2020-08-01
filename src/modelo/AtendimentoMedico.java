@@ -62,11 +62,11 @@ public class AtendimentoMedico extends SimProcess {
 
     }
 
-    public void addExameById(int idProximoPaciente) {
+    public void setExameSDK(int idProximoPaciente, String confirma_exame) {
 
     }
 
-    public void addMedicacaoById(int idProximoPaciente) {
+    public void setMedicacaoSDK(int idProximoPaciente, String confirma_medicacao) {
 
     }
 
