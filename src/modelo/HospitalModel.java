@@ -35,6 +35,13 @@ public class HospitalModel extends Model {
     protected ProcessQueue <Paciente> filaPacientesRecepcao;
     protected ProcessQueue <Paciente> filaPacientesTriagem;
     protected ProcessQueue <Paciente> filaPacientesAtendimentoMedico;
+    //Nao utilizado ainda
+    protected ProcessQueue <Paciente> filaPacientesAzul;
+    protected ProcessQueue <Paciente> filaPacientesVerde;
+    protected ProcessQueue <Paciente> filaPacientesAmarelo;
+    protected ProcessQueue <Paciente> filaPacientesLaranja;
+    protected ProcessQueue <Paciente> filaPacientesExame;
+    protected ProcessQueue <Paciente> filaPacientesMedicamento;
     
     //Fluxo de números aleatórios para os horários de chegada
     //Fluxo de números aleatórios para modelar o intervalo de tempo entre a chegada
@@ -51,6 +58,9 @@ public class HospitalModel extends Model {
     protected ProcessQueue<Recepcao> osciosidadeRecepcao;
     protected ProcessQueue<Triagem> osciosidadeTriagem;
     protected ProcessQueue<AtendimentoMedico> osciosidadeAtendimentoMedico;
+    //Nao utilizado ainda
+    protected ProcessQueue<Exame> osciosidadeExame;
+    protected ProcessQueue<Medicamento> osciosidadeMedicamento;
 
     //Fluxo de números aleatórios usado para desenhar um tempo de serviço para um paciente.
     //Provê o tempo de um serviço.
@@ -59,6 +69,9 @@ public class HospitalModel extends Model {
     public ContDistUniform serviceTimeRecepcao;
     public ContDistUniform serviceTimeTriagem;
     public ContDistUniform serviceTimeAtemdimentoMedico;
+    //Nao utilizado ainda
+    public ContDistUniform serviceTimeExame;
+    public ContDistUniform serviceTimeMedicamento;
 
     //Fluxo de números aleatórios 
     //Fluxo uniformemente distribuído de números pseudo-aleatórios do tipo long.
@@ -75,6 +88,9 @@ public class HospitalModel extends Model {
     protected static int NUM_RECEPCIONISTA = 6;
     protected static int NUM_ENFERMEIRAS = 3;
     protected static int NUM_MEDICOS = 1;
+    //Não utilizada ainda:
+    protected static int NUM_ESPECIALISTAS_EXAME = 1;
+    protected static int NUM_VAGA_MEDICACAO = 1;
     
 
     //dados de entrada da simulação
