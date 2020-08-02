@@ -22,7 +22,7 @@ public class ConnectionFactory {
     private final String DRIVER = "com.mysql.jdbc.Driver";
     private final String URL = "jdbc:mysql://localhost:3306/HOSPITAL_MODEL";
     private final String USER = "root";
-    private final String PASS = "yujiyuji18";
+    private final String PASS = "12345678";
 
     public Connection getConnection() {
 
