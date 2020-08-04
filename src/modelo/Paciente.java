@@ -141,11 +141,25 @@ public class Paciente extends SimProcess {
         return psdk.getClassificacaoById(idPaciente);
     }
 
-    public void getConfirmacaoExame() {
+    public String getConfirmacaoExame() {
+        
+        int idPaciente = (int) (paciente.getIdentNumber() - 11);
+        System.out.println("id do paciente(getIdByIdPaciente): " + idPaciente);
+        PacienteSDK psdk = new PacienteSDK();
+        psdk.getClassificacaoById(idPaciente);
+        System.out.println("Classificacao  do paciente: " + psdk.getExameById(idPaciente));
+        return psdk.getExameById(idPaciente);
 
     }
 
-    public void getConfirmacaoMedicacao() {
+    public String getConfirmacaoMedicacao() {
+        
+        int idPaciente = (int) (paciente.getIdentNumber() - 11);
+        System.out.println("id do paciente(getIdByIdPaciente): " + idPaciente);
+        PacienteSDK psdk = new PacienteSDK();
+        psdk.getClassificacaoById(idPaciente);
+        System.out.println("Classificacao  do paciente: " + psdk.getMedicamentoById(idPaciente));
+        return psdk.getMedicamentoById(idPaciente);
 
     }
 
