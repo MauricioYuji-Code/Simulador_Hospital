@@ -30,8 +30,11 @@ public class AtendimentoMedico extends SimProcess {
 
         while (true) {
             // verifica se há alguém esperando
-            if (myModel.filaPacientesAtendimentoMedico.isEmpty()) {
-
+            if (myModel.filaPacientesAtendimentoMedico.isEmpty()
+                    && myModel.filaPacientesLaranja.isEmpty()
+                    && myModel.filaPacientesAmarelo.isEmpty()
+                    && myModel.filaPacientesVerde.isEmpty()
+                    && myModel.filaPacientesAzul.isEmpty()) {
                 // NÃO, não há ninguém aguardando 
                 // insira-se na fila de recepcao inativa 
                 myModel.osciosidadeAtendimentoMedico.insert(this);
@@ -42,8 +45,9 @@ public class AtendimentoMedico extends SimProcess {
                 // SIM, existe um cliente (paciente) aguardando 
 
                 // obter uma referência ao primeiro caminhão da fila de pacientes 
-                Paciente proximoPaciente = myModel.filaPacientesAtendimentoMedico.first();
-                // remove o caminhão da fila 
+                //Paciente proximoPaciente = myModel.filaPacientesAtendimentoMedico.first();
+                Paciente proximoPaciente = getProximoPacienteByQueueClassification();
+                // remove o paciente da fila 
                 myModel.filaPacientesAtendimentoMedico.remove(proximoPaciente);
 
                 //Add confirmacao do exame/medicacao do paciente ao banco
@@ -84,4 +88,22 @@ public class AtendimentoMedico extends SimProcess {
 
     }
 
+    public Paciente getProximoPacienteByQueueClassification() {
+
+        if (!myModel.filaPacientesLaranja.isEmpty()) {
+            Paciente paciente = myModel.filaPacientesLaranja.first();
+            return paciente;
+        } else if (!myModel.filaPacientesLaranja.isEmpty()) {
+            Paciente paciente = myModel.filaPacientesAmarelo.first();
+            return paciente;
+        } else if (!myModel.filaPacientesLaranja.isEmpty()) {
+            Paciente paciente = myModel.filaPacientesVerde.first();
+            return paciente;
+        } else if (!myModel.filaPacientesLaranja.isEmpty()) {
+            Paciente paciente = myModel.filaPacientesAzul.first();
+            return paciente;
+        }
+            Paciente paciente = myModel.filaPacientesAtendimentoMedico.first();
+            return paciente;
+    }
 }

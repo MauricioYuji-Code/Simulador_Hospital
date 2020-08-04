@@ -229,6 +229,13 @@ public class HospitalModel extends Model {
         filaPacientesTriagem = new ProcessQueue<Paciente>(this, "Fila de pacientes para triagem", true, true);
         
         filaPacientesAtendimentoMedico = new ProcessQueue<Paciente>(this, "Fila de pacientes para atendimento medico", true, true);
+        
+        //Ainda não dinamicas e utilizadas
+        
+        filaPacientesLaranja = new ProcessQueue<Paciente>(this, "Fila de pacientes para atendimento medico(Laranja)", true, true);
+        filaPacientesAmarelo = new ProcessQueue<Paciente>(this, "Fila de pacientes para atendimento medico(Amarelo)", true, true);
+        filaPacientesVerde = new ProcessQueue<Paciente>(this, "Fila de pacientes para atendimento medico(Verde)", true, true);
+        filaPacientesAzul = new ProcessQueue<Paciente>(this, "Fila de pacientes para atendimento medico(Azul)", true, true);
 
         /*Exemplo "Pode ser utilizado para as entidades internas/servidores do modelo"*/
         // inicializa o osciosidadeRecepcao (recepcionista prontos para o serviço)
