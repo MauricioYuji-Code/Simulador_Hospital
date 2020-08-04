@@ -119,6 +119,16 @@ public class Paciente extends SimProcess {
         /*ATENDIMENTO MÉDICO*/
         //**OBS: ADPTAR PARA AS DEMAIS FILAS
         getClassificacao();
+        if ("laranja".equals(getClassificacao())) {
+            //insert filaLaranaja
+        } else if ("amarelo".equals(getClassificacao())) {
+            //insert filaAmarela
+        } else if ("verde".equals(getClassificacao())) {
+            //insert filaVerde
+        } else if ("azul".equals(getClassificacao())) {
+            //insert filaAzul
+        }
+
         myModel.filaPacientesAtendimentoMedico.insert(this);
         sendTraceNote("Comprimento da fila de pacientes (Atendimento Medico): " + myModel.filaPacientesAtendimentoMedico.length());
         if (!myModel.osciosidadeAtendimentoMedico.isEmpty()) {
@@ -142,7 +152,7 @@ public class Paciente extends SimProcess {
     }
 
     public String getConfirmacaoExame() {
-        
+
         int idPaciente = (int) (paciente.getIdentNumber() - 11);
         System.out.println("id do paciente(getIdByIdPaciente): " + idPaciente);
         PacienteSDK psdk = new PacienteSDK();
@@ -153,7 +163,7 @@ public class Paciente extends SimProcess {
     }
 
     public String getConfirmacaoMedicacao() {
-        
+
         int idPaciente = (int) (paciente.getIdentNumber() - 11);
         System.out.println("id do paciente(getIdByIdPaciente): " + idPaciente);
         PacienteSDK psdk = new PacienteSDK();
