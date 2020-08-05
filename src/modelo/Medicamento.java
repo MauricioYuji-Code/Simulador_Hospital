@@ -24,7 +24,31 @@ public class Medicamento extends SimProcess{
 
     @Override
     public void lifeCycle() throws SuspendExecution {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while (true) {
+            
+            if (myModel.filaPacientesMedicamento.isEmpty()) {
+
+                
+                myModel.osciosidadeMedicamento.insert(this);
+        
+                passivate();
+
+            } else {
+           
+                Paciente proximoPaciente = myModel.filaPacientesMedicamento.first();
+
+                myModel.filaPacientesMedicamento.remove(proximoPaciente);
+
+                int idProximoPaciente = (int) (proximoPaciente.getIdentNumber() - 11);
+                System.out.println("Id do proximo paciente (Medicamento): " + idProximoPaciente);
+
+                //hold(new TimeSpan(myModel.getServiceTime(), TimeUnit.MINUTES));
+  
+                proximoPaciente.activate();
+
+            }
+
+        }
     }
     
 }

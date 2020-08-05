@@ -8,6 +8,8 @@ package modelo;
 import co.paralleluniverse.fibers.SuspendExecution;
 import desmoj.core.simulator.Model;
 import desmoj.core.simulator.SimProcess;
+import desmoj.core.simulator.TimeSpan;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -23,7 +25,31 @@ public class Exame extends SimProcess{
     }
     @Override
     public void lifeCycle() throws SuspendExecution {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while (true) {
+            
+            if (myModel.filaPacientesExame.isEmpty()) {
+
+                
+                myModel.osciosidadeExame.insert(this);
+        
+                passivate();
+
+            } else {
+           
+                Paciente proximoPaciente = myModel.filaPacientesExame.first();
+
+                myModel.filaPacientesExame.remove(proximoPaciente);
+
+                int idProximoPaciente = (int) (proximoPaciente.getIdentNumber() - 11);
+                System.out.println("Id do proximo paciente (Exame): " + idProximoPaciente);
+
+                //hold(new TimeSpan(myModel.getServiceTime(), TimeUnit.MINUTES));
+  
+                proximoPaciente.activate();
+
+            }
+
+        }
     }
     
 }
